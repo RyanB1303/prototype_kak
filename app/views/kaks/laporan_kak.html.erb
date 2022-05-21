@@ -84,12 +84,28 @@
             <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter @total_pagu, delimiter: '.' %></p>
           </div>
         <% end %>
+        <% console %>
         <% if @program_kegiatans.exists? %>
           <div class="card-body">
-            <% if @sasarans.any? {|s| s.status == 'pengajuan' or s.status == 'disetujui' } %>
+            <% if @sasarans.all? {|s| s.status == 'pengajuan' } %>
               <%= button_tag type: 'submit', class: 'btn btn-info w-100 text-white', disabled: true do %>
                 <span><%= @sasarans.first.status.capitalize || 'Diajukan' %></span>
                 <i class="fas fa-check ms-2"></i>
+              <% end %>
+            <% elsif @sasarans.all? { |s| s.status == 'disetujui'} %>
+              <%= button_tag type: 'submit', class: 'btn btn-info w-100 text-white', disabled: true do %>
+                <span><%= @sasarans.first.status.capitalize || 'Diajukan' %></span>
+                <i class="fas fa-check ms-2"></i>
+              <% end %>
+            <% elsif @sasarans.any? { |s| s.status == 'ditolak'} %>
+              <%= form_with url: ajukan_semua_sasaran_path, local: false do |f| %>
+                <% @sasarans.pluck(:id).each do |s| %>
+                  <%= f.hidden_field :sasaran_diajukans, value: s, multiple: true  %>
+                <% end %>
+                <%= button_tag type: 'submit', class: 'btn btn-success w-100 text-white' do %>
+                  <span>Ajukan Verifikasi</span>
+                  <i class="fas fa-check ms-2"></i>
+                <% end %>
               <% end %>
             <% else %>
               <%= form_with url: ajukan_semua_sasaran_path, local: false do |f| %>

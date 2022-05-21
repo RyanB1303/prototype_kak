@@ -117,6 +117,20 @@
             </li>
           <% end %>
           <%# end %>
+          <% if current_user.nik == 'bapelitbangda' or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
+            <% reviewer_items.each do |reviewer_item| %>
+              <li class="nav-item<%= navigation_class(reviewer_item[:identifier]) %>">
+                <%= link_to( reviewer_item[:href], class: "nav-link d-flex justify-content-between #{reviewer_item[:href] == '#' ? 'text-danger' : ''}") do %>
+                  <span>
+                    <span class="sidebar-icon">
+                      <i class="<%= reviewer_item[:icon] %> icon icon-xs me-2"></i>
+                    </span>
+                    <span class="sidebar-text"><%= reviewer_item[:title] %></span>
+                  </span>
+                <% end %>
+              </li>
+            <% end %>
+          <% end %>
           <% master_data_items.each do |master_item| %>
             <li class="nav-item<%= navigation_class(master_item[:identifier]) %>">
               <%= link_to( master_item[:href], class: "nav-link d-flex justify-content-between") do %>

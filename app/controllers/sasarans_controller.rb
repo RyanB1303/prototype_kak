@@ -129,7 +129,7 @@ class SasaransController < ApplicationController
       @dom = params[:dom]
       flash.now[:danger] = 'KaK ditolak'
       @status = 'danger'
-      @type = 'revisi'
+      @type = 'ditolak'
       @text = 'KaK ditolak'
       format.js { render 'update_kak.js.erb' }
     end

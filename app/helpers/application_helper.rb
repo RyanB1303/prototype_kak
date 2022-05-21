@@ -61,6 +61,13 @@ module ApplicationHelper
     ]
   end
 
+  def reviewer_items
+    [
+      { title: 'Rasionalisasi', href: rasionalisasi_path, identifier: 'rasionalisasi', icon: 'fas fa-balance-scale' },
+      { title: 'Laporan Renja', href: '#', identifier: 'laporan_renja', icon: 'fas fa-receipt' }
+    ]
+  end
+
   def navigation_class(identifier)
     return ' active' if request.path.match(/\b#{identifier}/)
   end

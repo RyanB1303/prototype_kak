@@ -15,6 +15,11 @@
       Tolak
     <% end %>
   </td>
+<% elsif type == 'ditolak' %>
+  <button class="btn btn-sm btn-danger" disabled>
+    <i class="fas fa-times me-2"></i>
+    Ditolak
+  </button>
 <% else %>
   <td class="fw-bolder text-gray-500 text-center border-start border-end" rowspan="<%= rowspan %>" id="<%= dom %>">
     <%= link_to setujui_semua_sasaran_path(sasaran_diajukans: [sasarans], dom: dom , rowspan: rowspan),

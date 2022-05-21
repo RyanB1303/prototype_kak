@@ -18,7 +18,7 @@ class UsersController < ApplicationController
 
   def aktifkan_user
     @user = User.find_by(nik: params[:id])
-    @user.remove_role(:admin) if @user.has_role? :admin
+    # @user.remove_role(:admin) if @user.has_role? :admin
     @user.remove_role :non_aktif if @user.has_role? :non_aktif
     @user.add_role(:asn) unless @user.has_role? :asn
     respond_to do |format|
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
 
   def nonaktifkan_user
     @user = User.find_by(nik: params[:id])
-    @user.remove_role(:admin) if @user.has_role? :admin
+    # @user.remove_role(:admin) if @user.has_role? :admin
     @user.remove_role(:asn) if @user.has_role? :asn
     @user.add_role(:non_aktif) unless @user.has_role? :non_aktif
     # @user.has_role?(:non_aktif) ? @user.remove_role(:non_aktif) : @user.add_role(:non_aktif)

@@ -1,0 +1,61 @@
+<div class="card border-0 shadow" id="user_filter">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">Laporan KaK</h2>
+      </div>
+      <div class="col text-end">
+        <span><%= current_user.nama %></span>
+        |
+        <span><%= current_user.nik %></span>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-items-center border-start border-end" id="tabel_laporan_kak">
+        <thead class="thead-light">
+          <tr>
+            <th class="border-bottom" scope="col">No.</th>
+            <th class="border-bottom text-center text-wrap" scope="col">Sub Kegiatan</th>
+            <th class="border-bottom text-center text-wrap" scope="col">Pagu Anggaran</th>
+            <th class="border-bottom text-center border-start border-end" scope="col" colspan="2">Usulan</th>
+            <th class="border-bottom text-center border-start border-end" scope="col">Rasionalisasi</th>
+          </tr>
+          <tr>
+            <th colspan="3"></th>
+            <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
+            <th class="border-bottom text-center border-start border-end">Pagu Anggaran</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @program_kegiatans.each.with_index(1) do |kak, i| %>
+            <tr class="border-bottom">
+              <% row_dalam = kak.sasarans.count + 1  %>
+              <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= row_dalam %>"><%= i %></td>
+              <td class="text-gray-900 text-wrap" rowspan="<%= kak.sasarans.count + 1 %>"><%= kak.nama_subkegiatan %></td>
+              <td class="text-gray-900 border-end border-start" rowspan="<%= kak.sasarans.count + 1 %>">Rp. <%= number_with_delimiter(kak.my_pagu, delimiter: '.') or 0 %></td>
+              <td class="p-0 m-0"></td>
+              <td class="p-0 m-0"></td>
+              <td class="p-0 m-0"></td>
+              <% kak.sasarans.each do |show_sasaran| %>
+                <tr class="<%= warna_sasaran(show_sasaran.status_sasaran) %>">
+                  <td class="text-wrap border-start border-end" width="450px">
+                    <%= show_sasaran.sasaran_kinerja %>
+                  </td>
+                  <td class="border-start border-end border-bottom text-center">
+                    Rp. <%= number_with_delimiter(show_sasaran.total_anggaran, delimiter: '.') or 0 %>
+                  </td>
+                  <td class="border-start border-end border-bottom text-center">
+                    Rp. <%= number_with_delimiter(show_sasaran.total_anggaran_dengan_komentar, delimiter: '.') or 0 %>
+                  </td>
+                </tr>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

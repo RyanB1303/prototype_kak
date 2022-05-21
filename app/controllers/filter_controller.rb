@@ -100,6 +100,14 @@ class FilterController < ApplicationController
     end
   end
 
+  def filter_rasionalisasi
+    @program_kegiatans = ProgramKegiatan.includes(%i[opd subkegiatan_tematik]).where(opds: { kode_unik_opd: @kode_opd })
+    respond_to do |format|
+      @render_file = 'rasionalisasi/hasil_filter_rasionalisasi'
+      format.js { render 'rasionalisasi/rasionalisasi_filter' }
+    end
+  end
+
   private
 
   def filter_params

@@ -16,13 +16,13 @@ class FilterController < ApplicationController
   KODE_OPD_TABLE = {
     'Dinas Kesehatan, Pengendalian Penduduk dan Keluarga Berencana': '1.02.2.14.0.00.03.0000',
     'Rumah Sakit Umum Daerah Kota Madiun': '1.02.2.14.0.00.03.0000',
-    'Sekretariat Daerah': '4.01.0.00.0.00.01.00',
-    'Bagian Umum': '4.01.0.00.0.00.01.00',
-    'Bagian Pengadaan Barang / Jasa dan Administrasi Pembangunan': '4.01.0.00.0.00.01.00',
-    'Bagian Organisasi': '4.01.0.00.0.00.01.00',
-    'Bagian Hukum': '4.01.0.00.0.00.01.00',
-    'Bagian Perekonomian dan Kesejahteraan Rakyat': '4.01.0.00.0.00.01.00',
-    'Bagian Pemerintahan': '4.01.0.00.0.00.01.00'
+    'Sekretariat Daerah': '4.01.0.00.0.00.01.0000',
+    'Bagian Umum': '4.01.0.00.0.00.01.0000',
+    'Bagian Pengadaan Barang / Jasa dan Administrasi Pembangunan': '4.01.0.00.0.00.01.0000',
+    'Bagian Organisasi': '4.01.0.00.0.00.01.0000',
+    'Bagian Hukum': '4.01.0.00.0.00.01.0000',
+    'Bagian Perekonomian dan Kesejahteraan Rakyat': '4.01.0.00.0.00.01.0000',
+    'Bagian Pemerintahan': '4.01.0.00.0.00.01.0000'
   }.freeze
 
   def filter_sasaran

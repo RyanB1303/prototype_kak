@@ -84,7 +84,6 @@
             <p>Total Pagu Anggaran : Rp. <%= number_with_delimiter @total_pagu, delimiter: '.' %></p>
           </div>
         <% end %>
-        <% console %>
         <% if @program_kegiatans.exists? %>
           <div class="card-body">
             <% if @sasarans.all? {|s| s.status == 'pengajuan' } %>

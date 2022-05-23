@@ -122,13 +122,13 @@ prawn_document do |pdf|
   pdf.move_down 10
   tabel_penerima_manfaat = pdf.make_table(data_penerima_manfaat, column_widths: { 0 => 17, 1 => 50, 2 => 100 },
             cell_style: { size: 6, align: :left }, width: pdf.bounds.width)
-  pdf.move_down 30
-  end
   tabel_penerima_manfaat.draw
-  if pdf.cursor - tabel_renaksi.height < 0
+  pdf.move_down 30
+  if pdf.cursor - tabel_penerima_manfaat.height < 0
     pdf.start_new_page
   end
   pdf.move_down 50
   pdf.text "Kepala Dinas"
   pdf.text "#{@program_kegiatan.opd.nama_kepala}"
+  end
 end

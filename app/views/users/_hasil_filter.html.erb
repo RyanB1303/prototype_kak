@@ -2,7 +2,7 @@
   <div class="row align-items-center">
     <div class="col">
       <% opd = Opd.find_by(kode_unik_opd: @kode_opd) %>
-      <h2 class="fs-5 fw-bold mb-0">List ASN <%= opd.nama_opd %></h2>
+      <h2 class="fs-5 fw-bold mb-0">List ASN <%= opd.nama_opd %> - <%= opd.kode_unik_opd %></h2>
     </div>
     <div class="col text-end">
       <%= link_to sync_pegawai_path(kode_opd: kode_opd, tahun: Date.today.year, bulan: Date.today.month), 

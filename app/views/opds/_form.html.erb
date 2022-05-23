@@ -38,6 +38,14 @@
     <%= form.text_field :kode_unik_opd, class: "form-control" %>
   </div>
   <div class="field">
+    <%= form.label :nama_kepala %>
+    <%= form.text_field :nama_kepala, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :nip_kepala %>
+    <%= form.text_field :nip_kepala, class: "form-control" %>
+  </div>
+  <div class="field">
     <%= form.label :lembaga_id %>
     <%= form.select :lembaga_id, Lembaga.all.collect {|n| [n.nama_lembaga, n.id]}, {include_blank: true}, {class: "select2-waw", "data-placeholder": "Pilih Lembaga", required: true} %>
   </div>

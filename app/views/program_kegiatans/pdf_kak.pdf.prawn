@@ -127,8 +127,14 @@ prawn_document do |pdf|
   if pdf.cursor - tabel_penerima_manfaat.height < 0
     pdf.start_new_page
   end
+end
+pdf.bounding_box([pdf.bounds.width - 300, pdf.cursor - 50], width: pdf.bounds.width - 200) do
+  pdf.text "Madiun, #{I18n.l Date.today}", size: 8, align: :center
+  pdf.move_down 5
+  pdf.text "<strong>Kepala</strong>", size: 8, align: :center, inline_format: true
+  pdf.text "<strong>#{@program_kegiatan.opd.nama_opd}</strong>", size: 8, align: :center, inline_format: true
   pdf.move_down 50
-  pdf.text "Kepala Dinas"
-  pdf.text "#{@program_kegiatan.opd.nama_kepala}"
-  end
+  pdf.text "#{@program_kegiatan.opd.nama_kepala || 'belum disetting'}", size: 8, align: :center
+  pdf.text "#{@program_kegiatan.opd.nip_kepala || 'belum disetting'}", size: 8, align: :center
+end
 end

@@ -28,6 +28,8 @@ class OpdsController < ApplicationController
   def update
     respond_to do |f|
       if @opd.update(opd_params)
+        flash.now[:success] = 'Opd berhasil diupdate.'
+        f.js
         f.html { redirect_to @opd, notice: 'Opd berhasil diupdate.' }
       else
         f.html { render :edit, notice: 'Opd gagal diupdate.' }

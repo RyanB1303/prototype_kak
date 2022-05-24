@@ -1,0 +1,53 @@
+<div class="card border-0 shadow" id="hasil_filter_opd">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">List OPD</h2>
+      </div>
+      <% if current_user.has_role? :super_admin %>
+        <div class="col text-end">
+          <%= link_to sync_data_opd_path(tahun: Date.today.year + 1),
+                data: { disable_with: 'Memproses....'},
+                class:"btn btn-sm btn-danger" do %>
+            <i class="fas fa-sync me-2"></i>
+            Sync OPD <%= Date.today.year + 1 %>
+          <% end %>
+        </div>
+        <div class="col text-end">
+          <%= link_to new_opd_path, class: "btn btn-sm btn-primary" do %>
+            <i class="fas fa-plus-circle me-2"></i>
+            Tambah OPD
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-flush datatable" data-datatable>
+        <thead class="thead-light">
+          <tr>
+            <th>OPD</th>
+            <th>Nama Kepala OPD</th>
+            <th>NIP Kepala OPD</th>
+            <th>Pangkat Kepala OPD</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= opd.nama_opd %></td>
+            <td><%= opd.nama_kepala %></td>
+            <td><%= opd.nip_kepala %></td>
+            <td><%= opd.pangkat_kepala %></td>
+            <td><%= link_to edit_opd_path(opd), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-opd'}, class: 'btn btn-info' do  %>
+                <i class="fas fa-edit me-2"></i>
+                Edit
+              <% end %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

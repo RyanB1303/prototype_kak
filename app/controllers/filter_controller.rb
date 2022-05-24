@@ -108,6 +108,14 @@ class FilterController < ApplicationController
     end
   end
 
+  def filter_opd
+    @opd = Opd.find_by(kode_unik_opd: @kode_opd)
+    @filter_file = 'hasil_filter_opd' if params[:filter_file].empty?
+    respond_to do |format|
+      format.js { render 'opds/opd_filter' }
+    end
+  end
+
   private
 
   def filter_params

@@ -10,55 +10,21 @@
         <li class="breadcrumb-item active" aria-current="page">List OPD</li>
       </ol>
     </nav>
-    <div class="card border-0 shadow">
+    <% if current_user.has_role? :admin %>
+      <%= render 'shared/filter_card', filter_url: '/filter_opd' %>
+    <% end %>
+    <div class="card border-0 shadow"  id="hasil_filter_opd">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
             <h2 class="fs-5 fw-bold mb-0">List OPD</h2>
           </div>
-          <div class="col text-end">
-            <%= link_to sync_data_opd_path(tahun: Date.today.year + 1), 
-      data: { disable_with: 'Memproses....'},
-      class:"btn btn-sm btn-tertiary" do %>
-              <i class="fas fa-sync me-2"></i>
-              Sync OPD <%= Date.today.year + 1 %>
-            <% end %>
-          </div>
-          <div class="col text-end">
-            <%= link_to "Tambah OPD", new_opd_path, class: "btn btn-sm btn-info" %>
-          </div>
         </div>
       </div>
       <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-flush datatable" data-datatable>
-            <thead class="thead-light">
-              <tr>
-                <th>Nama OPD</th>
-                <th>Kode OPD SKP</th>
-                <th>Kode SKPD</th>
-                <th>Kode OPD</th>
-                <th>Lembaga</th>
-                <th colspan="3"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @opds.order(:id_opd_skp).each do |opd| %>
-                <tr>
-                  <td><%= opd.nama_opd %></td>
-                  <td><%= opd.id_opd_skp %></td>
-                  <td><%= opd.kode_unik_opd %></td>
-                  <td><%= opd.kode_opd %></td>
-                  <td><%= opd.lembaga.nama_lembaga %></td>
-                  <td><%= link_to 'Show', opd %></td>
-                  <td><%= link_to 'Edit', edit_opd_path(opd) %></td>
-                  <td><%= link_to 'Destroy', opd, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+        ...
       </div>
     </div>
   </div>
 </div>
+<%= render 'modal' %>

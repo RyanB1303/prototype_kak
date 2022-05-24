@@ -190,6 +190,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   post '/filter_kak', to: 'filter#filter_kak'
   post '/filter_rab', to: 'filter#filter_rab'
   post '/filter_rasionalisasi', to: 'filter#filter_rasionalisasi'
+  post '/filter_opd', to: 'filter#filter_opd'
   # get "/program_kegiatans", to: "program_kegiatans#index"
   # get "/program_kegiatans/new", to: "program_kegiatans#new"
   # get "/program_kegiatan/:id", to: "program_kegiatans#show"

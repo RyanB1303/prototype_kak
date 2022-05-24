@@ -1,5 +1,5 @@
 class UsulansController < ApplicationController
-  before_action :check_params
+  before_action :check_params, only: %i[update_sasaran_asn hapus_usulan_dari_sasaran]
 
   def update_sasaran_asn
     sasaran = params[:sasaran_id]
@@ -39,6 +39,10 @@ class UsulansController < ApplicationController
         format.js { render 'update_sasaaran_asn', status: :unprocessable_entity }
       end
     end
+  end
+
+  def laporan_usulan
+    # render laporan usulan
   end
 
   private

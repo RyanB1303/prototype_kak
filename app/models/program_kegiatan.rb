@@ -56,6 +56,7 @@ class ProgramKegiatan < ApplicationRecord
   belongs_to :subkegiatan_tematik, optional: true
   has_many :kaks
   has_many :sasarans, dependent: :nullify
+  has_many :usulans, through: :sasarans
 
   # default_scope { order(created_at: :desc) }
 

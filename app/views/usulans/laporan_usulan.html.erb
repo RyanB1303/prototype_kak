@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Laporan Usulan</li>
+      </ol>
+    </nav>
+    <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
+      <%= render 'shared/filter_card', filter_url: '/filter_mandatori' %>
+    <% end %>
+    <div class="card border-0 shadow" id="usulan_filter">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Laporan Usulan</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

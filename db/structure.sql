@@ -1840,6 +1840,39 @@ ALTER SEQUENCE public.subkegiatan_tematiks_id_seq OWNED BY public.subkegiatan_te
 
 
 --
+-- Name: subkegiatan_priorities; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.subkegiatan_priorities (
+                                               id bigint NOT NULL,
+                                               nama_priority character varying,
+                                               kode_priority character varying,
+                                               tahun character varying,
+                                               created_at timestamp(6) without time zone NOT NULL,
+                                               updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: subkegiatan_priorities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.subkegiatan_priorities_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: subkegiatan_priorities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.subkegiatan_priorities_id_seq OWNED BY public.subkegiatan_priorities.id;
+
+
+--
 -- Name: sumber_danas; Type: TABLE; Schema: public; Owner: -
 --
 

@@ -1,0 +1,57 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5>Prioritas </h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% unless diajukan? %>
+    <div class="card-body">
+      <p>Tambah Prioritas</p>
+      <%= form_with(url: add_sasaran_priority_path, local: false) do |f| %>
+        <%= f.select(:id_priority,
+          [],
+          {}, { class:'select2-waw',
+          data: {'ajax--url': "/priorities.json", "ajax--cache": "true", "placeholder": "Pilih Prioritas"} } )%>
+        <%= f.hidden_field :id_sasaran, value: sasaran.id %>
+        <div class="actions">
+          <%= f.submit "Tambah Prioritas" %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <% unless sasaran.subkegiatan_priorities.nil? %>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Prioritas</th>
+              <% unless diajukan? %>
+                <th class="text-center align-middle">Action</th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% sasaran.subkegiatan_priorities.each do |priority| %>
+              <tr>
+                <td class="align-middle text-wrap"><%= priority.nama_priority %></td>
+                <% unless diajukan? %>
+                  <td class="text-center align-middle">
+                    <%= button_to 'X', "/hapus_priority_from_sasaran", remote: true, method: :post,
+                    class: 'btn btn-danger text-center',
+                    data: {confirm_swal: "Hapus prioritas?"}, params: {id_sasaran: sasaran.id, id_priority: priority.id} %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+</div>

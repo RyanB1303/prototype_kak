@@ -1,0 +1,72 @@
+<div class="card border-0 shadow" id="usulan_filter">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="fs-5 fw-bold mb-0">
+          Kota Madiun - <%= @nama_priority %> - <%= @tahun %>
+        </h2>
+      </div>
+      <div class="col">
+        <%= link_to cetak_pdf_subkegiatan_priority_path(@kode_priority, format: :pdf), class:"btn btn-sm btn-primary" do %>
+          Download PDF 
+          <i class="fas fa-file-pdf ms-2"></i>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table align-items-center border-start border-end" id="tabel_usulan">
+        <thead class="thead-light">
+          <tr>
+            <th class="border-bottom" scope="col">No.</th>
+            <th class="border-bottom text-center text-wrap" scope="col">Sasaran Kinerja</th>
+            <th class="border-bottom text-center text-wrap" scope="col">Indikator</th>
+            <th class="border-bottom text-center text-wrap" scope="col">Target</th>
+            <th class="border-bottom text-center text-wrap" scope="col">Satuan</th>
+            <th class="border-bottom text-center text-wrap" scope="col">Anggaran</th>
+            <th class="border-bottom text-center text-wrap" scope="col">Sub Kegiatan</th>
+            <th class="border-bottom text-center text-wrap" scope="col">Program</th>
+            <th class="border-bottom text-center text-wrap" scope="col">OPD</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @priorities.each.with_index(1) do |priority, i| %>
+            <% rowspan = priority.indikator_sasarans.count + 1 %>
+            <tr class="border-bottom">
+              <td class="text-gray-900 fw-bolder border-bottom" rowspan="<%= rowspan %>" width="50px"><%= i %></td>
+              <td class="text-gray-900 border-end border-start text-wrap" rowspan="<%= rowspan %>" width="200px"><%= priority.sasaran_kinerja %></td>
+              <td class="p-0 m-0 border-start border-end" style="height: 0px !important; border-color: transparent;"></td>
+              <td class="p-0 m-0 border-start border-end" style="height: 0px !important; border-color: transparent;"></td>
+              <td class="p-0 m-0 border-start border-end" style="height: 0px !important; border-color: transparent;"></td>
+              <td class="text-gray-900 border-end border-start px-3"  rowspan="<%= rowspan %>" width="150px">Rp. <%= number_with_delimiter(priority.total_anggaran) %></td>
+              <td class="text-gray-900 border-end border-start text-wrap" rowspan="<%= rowspan %>" width="100px"><%= priority.program_kegiatan&.nama_subkegiatan || '-' %></td>
+              <td class="text-gray-900 border-end border-start text-wrap" rowspan="<%= rowspan %>" width="100px"><%= priority.program_kegiatan&.nama_program || '-' %></td>
+              <td class="text-gray-900 border-end border-start text-wrap" rowspan="<%= rowspan %>" width="300px"><%= priority.opd.nama_opd %></td>
+              <% priority.indikator_sasarans.each do |indikator| %>
+                <tr>
+                  <td class="border-start border-end text-wrap"><%= indikator.indikator_kinerja %></td>
+                  <td class="border-start border-end text-wrap" width="50px"><%= indikator.target %></td>
+                  <td class="border-start border-end text-wrap"><%= indikator.satuan %></td>
+                </tr>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td>Jumlah</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="fw-bolder border-start border-end">Rp. <%= number_with_delimiter(@priorities.map(&:total_anggaran).compact.sum) %></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>

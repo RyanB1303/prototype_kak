@@ -1,0 +1,28 @@
+<%= form_with(model: subkegiatan_priority) do |form| %>
+  <% if subkegiatan_priority.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(subkegiatan_priority.errors.count, "error") %> prohibited this subkegiatan_priority from being saved:</h2>
+
+      <ul>
+        <% subkegiatan_priority.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= form.label :kode_priority, 'Kode Prioritas', class: "form-label" %>
+    <%= form.text_field :kode_priority, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :nama_priority, 'Nama Prioritas', class: "form-label" %>
+    <%= form.text_field :nama_priority, class: "form-control" %>
+  </div>
+  <div class="field">
+    <%= form.label :tahun, class: "form-label" %>
+    <%= form.text_field :tahun, class: "form-control" %>
+  </div>
+  <div class="actions">
+    <%= form.submit 'Simpan Subkegiatan Prioritas'%>
+  </div>
+<% end %>

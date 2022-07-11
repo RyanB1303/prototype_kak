@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Peta SPBE</li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow mb-4">
+      <div class="card-header">
+        <div class="row">
+          <div class="col">
+            <h2 class="mb-0">
+              Filter
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <%= form_with url: '/filter_priorities', local: false do |form| %>
+          <% year = Date.today.year %>
+          <%= form.label :tahun %>
+          <%= form.select :tahun, [year, year + 1] ,{ include_blank: true },
+          {class: "form-control select2-waw", required: true,  data: {"placeholder": "Tahun"}}  %>
+          <br>
+          <% dropdown = options_for_select(SubkegiatanPriority.all.pluck(:nama_priority, :kode_priority)) %>
+          <%= form.label :tema %>
+          <%= form.select :kode_priority, dropdown, { include_blank: true }, { class: "form-control select2-waw", data: {"placeholder": "Pilih Prioritas"}, required: true }  %>
+          <%= form.submit 'Filter' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="card border-0 shadow" id="priority_filter">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Peta SPBE</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

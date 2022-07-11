@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mb-3">
+      <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to root_path do %>
+            <i class="fas fa-home"></i>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to "Prioritas", subkegiatan_priorities_path %></li>
+      </ol>
+    </nav>
+    <div class="card border-0 shadow">
+      <div class="card-header">
+        <div class="row align-items-center">
+          <div class="col">
+            <h2 class="fs-5 fw-bold mb-0">Prioritas</h2>
+          </div>
+          <div class="col text-end">
+            <%= link_to "Tambah Prioritas", new_subkegiatan_priority_path, class: "btn btn-sm btn-info" %>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th class="border-bottom" scope="col">No.</th>
+                <th class="border-bottom" scope="col">Prioritas</th>
+                <th class="border-bottom" scope="col">Kode Prioritas</th>
+                <th class="border-bottom text-center" colspan="3">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @subkegiatan_priorities.each.with_index(1) do |subkegiatan_priority, i| %>
+                <tr>
+                  <td class="text-gray-900 fw-bolder" scope="row"><%= i %></td>
+                  <td class="fw-bolder text-gray-500"><%= subkegiatan_priority.nama_priority %></td>
+                  <td class="fw-bolder text-gray-500"><%= subkegiatan_priority.kode_priority %></td>
+                  <td class="fw-bolder text-gray-500"><%= link_to subkegiatan_priority do %>
+                    <i class="fas fa-eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Show item"></i>
+                  <% end %>
+                  </td>
+                  <td class="fw-bolder text-gray-500"><%= link_to edit_subkegiatan_priority_path(subkegiatan_priority) do %>
+                    <i class="fa fa-edit" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                  <% end %>
+                  </td>
+                  <td class="fw-bolder text-gray-500"><%= link_to subkegiatan_priority, method: :delete, data: { confirm: 'Hapus Prioritas?' } do %>
+                    <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                  <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -49,6 +49,7 @@ module SidebarItemHelper
     [
       { title: 'Laporan Sasaran', href: laporan_sasarans_path, identifier: 'laporan_sasaran', icon: 'fas fa-copy' },
       { title: 'Tematik', href: subkegiatan_tematiks_path, identifier: 'tematik', icon: 'fas fa-tags' },
+      { title: 'Prioritas', href: subkegiatan_priorities_path, identifier: 'priorities', icon: 'fas fa-star' },
       { title: 'Program', href: admin_program_path, identifier: 'admin_program',
         icon: 'fas fa-tasks' },
       { title: 'Kegiatan', href: admin_kegiatan_path, identifier: 'admin_kegiatan',

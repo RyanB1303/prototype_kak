@@ -356,6 +356,14 @@ ActiveRecord::Schema.define(version: 20_220_417_070_528) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "subkegiatan_priorities", force: :cascade do |t|
+    t.string "nama_priority"
+    t.string "kode_priority"
+    t.string "tahun"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "tahapans", force: :cascade do |t|
     t.string "tahapan_kerja"
     t.integer "target"

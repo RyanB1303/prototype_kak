@@ -12,6 +12,11 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
       get :cetak_pdf
     end
   end
+  resources :subkegiatan_priorities, path: 'priorities' do
+    member do
+      get :cetak_pdf
+    end
+  end
   resources :rekenings
   resources :musrenbangs do
     member do

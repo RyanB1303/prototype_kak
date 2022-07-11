@@ -43,3 +43,7 @@ yarn-debug.log*
 .yarn-integrity
 /config/credentials.yml.enc
 .vscode/launch.json
+
+.idea/*
+#macos garbage
+.DS_Store

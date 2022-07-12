@@ -1871,6 +1871,21 @@ CREATE SEQUENCE public.subkegiatan_priorities_id_seq
 
 ALTER SEQUENCE public.subkegiatan_priorities_id_seq OWNED BY public.subkegiatan_priorities.id;
 
+-- 
+-- SEQUENCE public.subkegiatan_priorities -
+--
+
+--
+-- Name: subkegiatan_priorities subkegiatan_priorities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+ALTER TABLE ONLY public.subkegiatan_priorities
+    ADD CONSTRAINT subkegiatan_priorities_pkey PRIMARY KEY (id);
+
+--
+-- Name: subkegiatan_priorities id; Type: DEFAULT; Schema: public; Owner: -
+--
+ALTER TABLE ONLY public.subkegiatan_priorities ALTER COLUMN id SET DEFAULT nextval('public.subkegiatan_priorities_id_seq'::regclass);
+
 
 --
 -- Name: sumber_danas; Type: TABLE; Schema: public; Owner: -

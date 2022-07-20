@@ -244,10 +244,14 @@ class Sasaran < ApplicationRecord
   end
 
   def rekin_atasan
+    return nil if sasaran_atasan_id.nil?
+
     Sasaran.find_by(id_rencana: sasaran_atasan_id)
   end
 
   def indikator_rekin_atasan
+    return nil if sasaran_atasan_id.nil?
+
     rekin_atasan.indikator_sasarans
   end
 end

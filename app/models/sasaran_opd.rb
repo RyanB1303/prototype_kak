@@ -34,5 +34,5 @@
 #  fk_rails_...  (subkegiatan_tematik_id => subkegiatan_tematiks.id)
 #
 class SasaranOpd < Sasaran
-  
+  has_one :opd_sasaran, foreign_key: 'kode_unik_opd', primary_key: 'sasaran_opd', class_name: 'Opd'
 end

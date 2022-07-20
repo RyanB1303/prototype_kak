@@ -30,6 +30,13 @@ module Api
                   success: "Update Struktur Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
     end
 
+    def sync_opd
+      UpdateOpdJob.set(queue: "sasaran-#{nama_opd}-#{@kode_opd}-opd-#{@tahun}")
+                  .perform_later(@kode_opd, @tahun)
+      redirect_to opds_path,
+                  success: "Update Sasaran Opd #{nama_opd} Dikerjakan. Harap menunggu..."
+    end
+
     private
 
     def verify_kode_opd

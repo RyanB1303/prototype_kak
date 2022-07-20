@@ -11,11 +11,13 @@
 #  penerima_manfaat       :string
 #  sasaran_atasan         :string
 #  sasaran_kinerja        :string
+#  sasaran_opd            :string
 #  satuan                 :string
 #  status                 :enum             default("draft")
 #  sumber_dana            :string
 #  tahun                  :string
 #  target                 :integer
+#  type                   :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  program_kegiatan_id    :bigint

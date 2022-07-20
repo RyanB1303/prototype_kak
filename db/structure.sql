@@ -1659,7 +1659,9 @@ CREATE TABLE public.sasarans (
     tahun character varying,
     status public.sasaran_status DEFAULT 'draft'::public.sasaran_status,
     sasaran_atasan character varying,
-    sasaran_atasan_id character varying
+    sasaran_atasan_id character varying,
+    type character varying,
+    sasaran_opd character varying
 );
 
 
@@ -3565,6 +3567,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220627025154'),
 ('20220704014143'),
 ('20220719032829'),
-('20220719071026');
+('20220719071026'),
+('20220720064452');
 
 

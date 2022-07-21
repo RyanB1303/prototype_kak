@@ -27,7 +27,7 @@ module PrototypeKak
     # in config/environments, which are processed later.
     # "Jakarta" => "Asia/Jakarta"
     config.time_zone = 'Jakarta'
-    config.active_job.queue_adapter = :resque
+    config.active_job.queue_adapter = :sidekiq
     config.active_record.schema_format = :sql
     # config.eager_load_paths << Rails.root.join("extras")
     config.generators.system_tests = nil

@@ -18,7 +18,7 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -79,10 +79,11 @@ gem 'pagy', '~> 5.10'
 gem 'prawn'
 gem 'prawn-rails', '~> 1.4', '>= 1.4.2'
 gem 'prawn-table'
-gem 'redis'
+# gem 'redis'
 gem 'resque', require: 'resque/server'
 gem 'rolify', '~> 6.0'
 gem 'scenic'
+gem 'sidekiq'
 # gem 'strong_migrations'
 gem 'online_migrations'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

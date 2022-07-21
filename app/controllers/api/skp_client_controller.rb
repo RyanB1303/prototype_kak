@@ -10,29 +10,25 @@ module Api
     before_action :verify_kode_opd, only: [:sync_sasaran]
 
     def sync_sasaran
-      UpdateSkpJob.set(queue: "#{nama_opd}-#{@kode_opd}-sasaran-#{@tahun}-#{@bulan}")
-                  .perform_later(@kode_opd, @tahun, @bulan, @nip_asn)
+      UpdateSkpJob.perform_later(@kode_opd, @tahun, @bulan, @nip_asn)
       redirect_to adminusers_path,
                   success: "Update Sasaran #{@nip_asn} Dikerjakan. Harap menunggu..."
     end
 
     def sync_pegawai
-      UpdateUserJob.set(queue: "#{nama_opd}-#{@kode_opd}-user-#{@tahun}-#{@bulan}")
-                   .perform_later(@kode_opd, @tahun, @bulan)
+      UpdateUserJob.perform_later(@kode_opd, @tahun, @bulan)
       redirect_to adminusers_path,
                   success: "Update Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
     end
 
     def sync_struktur_pegawai
-      UpdateStrukturJob.set(queue: "#{nama_opd}-#{@kode_opd}-user-#{@tahun}-#{@bulan}")
-                       .perform_later(@kode_opd, @tahun, @bulan)
+      UpdateStrukturJob.perform_later(@kode_opd, @tahun, @bulan)
       redirect_to adminusers_path,
                   success: "Update Struktur Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
     end
 
     def sync_opd
-      UpdateOpdJob.set(queue: "sasaran-#{nama_opd}-#{@kode_opd}-opd-#{@tahun}")
-                  .perform_later(@kode_opd, @tahun)
+      UpdateOpdJob.perform_later(@kode_opd, @tahun)
       redirect_to opds_path,
                   success: "Update Sasaran Opd #{nama_opd} Dikerjakan. Harap menunggu..."
     end

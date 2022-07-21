@@ -15,6 +15,12 @@ lembaga = Lembaga.create(nama_lembaga: 'Kota Madiun', tahun: '2022')
 Pajak.create(tahun: '2022', tipe: 'Tanpa Pajak', potongan: 0)
 Pajak.create(tahun: '2022', tipe: 'PPN', potongan: 0.1)
 opd = Opd.create(nama_opd: 'Super Admin', kode_opd: '123456890', lembaga_id: lembaga.id)
+Opd.create(nama_opd: 'Badan Perencanaan, Penelitian dan Pengembangan Daerah',
+           kode_opd: '1275',
+           id_opd_skp: 481,
+           kode_unik_opd: '5.01.5.05.0.00.02.0000',
+           id_daerah: '109',
+           lembaga_id: lembaga.id)
 user = User.create(nama: 'Super Admin', nik: 'super_admin', kode_opd: opd.kode_opd, email: 'admin@test.com',
                    password: '123456')
 %w[admin asn reviewer non_aktif super_admin].each do |role_name|

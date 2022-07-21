@@ -116,6 +116,7 @@ GEM
       caxlsx (>= 3.0)
     childprocess (4.1.0)
     concurrent-ruby (1.1.10)
+    connection_pool (2.2.5)
     crass (1.0.6)
     database_cleaner (2.0.1)
       database_cleaner-active_record (~> 2.0.0)
@@ -325,6 +326,10 @@ GEM
     semantic_range (3.0.0)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
+    sidekiq (6.5.1)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
     sinatra (2.2.0)
       mustermann (~> 1.0)
       rack (~> 2.2)
@@ -435,7 +440,7 @@ DEPENDENCIES
   rack-mini-profiler (~> 2.0)
   rails (~> 6.1)
   rails-controller-testing
-  redis
+  redis (~> 4.0)
   resque
   rolify (~> 6.0)
   rspec-core
@@ -443,6 +448,7 @@ DEPENDENCIES
   scenic
   selenium-webdriver
   shoulda-matchers (~> 5.0)
+  sidekiq
   solargraph
   spring
   turbolinks (~> 5)

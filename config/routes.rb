@@ -130,6 +130,12 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     get 'jumlah', on: :collection
   end
 
+  resources :sasaran_program_opds do
+    collection do
+      get :spip
+    end
+  end
+
   # resque
   authenticate :user, ->(u) { u.id == 1 } do
     mount Resque::Server, at: '/jobs'

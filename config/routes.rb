@@ -139,6 +139,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   # resque
   authenticate :user, ->(u) { u.id == 1 } do
     mount Resque::Server, at: '/jobs'
+    mount RailsMiniProfiler::Engine => '/rails_mini_profiler'
   end
   # sasaran
   get '/verifikasi_sasarans', to: 'sasarans#verifikasi_sasaran'

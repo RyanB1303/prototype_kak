@@ -1,5 +1,10 @@
 version: "3"
 services:
+  redis:
+    image: "redis:4.0-alpine"
+    volumes:
+      - redis_data:/data
+      
   postgres:
     image: "postgres:12"
     container_name: postgres
@@ -33,6 +38,21 @@ services:
     command: bundle exec rails server -b 0.0.0.0
     depends_on:
       - postgres
+      - redis
+  workers:
+    build:
+      args:
+        RUBY_VERSION: '3.0.1'
+        NODE_MAJOR: '14'
+        BUNDLE_VERSION: '2.2.15'
+      context: .
+      dockerfile: Dockerfile.dev
+    command: environment bundle exec rails resque:work
+    environment:
+      REDIS_URL: redis://redis
+      QUEUE: "*"
+    depends_on:
+      - app
 volumes:
   rails_cache:
   bundle:
@@ -40,3 +60,4 @@ volumes:
   gem_cache:
   db_data:
   shared_data:
+  redis_data:

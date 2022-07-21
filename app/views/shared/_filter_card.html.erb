@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="card-body">
-    <% filter_value =  '' if local_assigns[:filter_file].nil? %>
+    <% filter_value =  local_assigns[:filter_file] || '' %>
     <% filter_jenis = local_assigns[:jenis] || '' %>
     <%= form_with url: filter_url, local: false do |form| %>
       <%= form.hidden_field :filter_file, value: filter_value %>

@@ -86,7 +86,7 @@ module SidebarItemHelper
 
   def spip_items
     [
-      { title: 'SPIP', href: spip_sasaran_program_opds_path, identifier: 'spip_sasaran', icon: 'fas fa-receipt' }
+      { title: 'SPIP', href: spip_sasaran_program_opds_path, identifier: 'sasaran_program_opds/spip' }
     ]
   end
 

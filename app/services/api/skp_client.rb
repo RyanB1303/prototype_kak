@@ -147,7 +147,7 @@ module Api
           tahun: sasaran['tahun'],
           sasaran_kinerja: sasaran['sasaran'],
           sasaran_opd: sasaran['unit_id'],
-          created_at: sasaran['created_at'], updated_at: sasaran['updated_at']
+          created_at: Time.now, updated_at: Time.now
         }
         SasaranOpd.upsert(data_sasaran, unique_by: :id_rencana)
       end

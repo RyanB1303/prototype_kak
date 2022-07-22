@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require 'resque/server'
+# require 'resque/server'
 require 'sidekiq/web'
+require 'sidekiq-status/web'
 Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :anggaran_hspks
   resources :anggaran_sbus
@@ -140,7 +141,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
 
   # resque
   # authenticate :user, ->(u) { u.id == 1 } do
-  #   mount Resque::Server, at: '/jobs'
+  #   get '/sidekiq'
   # end
   # sasaran
   get '/verifikasi_sasarans', to: 'sasarans#verifikasi_sasaran'

@@ -7,6 +7,7 @@
     <% if current_user.has_role? :super_admin %>
       <div class="col text-end">
         <%= link_to update_detail_kegiatan_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year),
+      remote: true,
       data: { disable_with: 'Memproses....'},
       class:"btn btn-sm btn-primary" do %>
           <i class="fas fa-sync me-2"></i>
@@ -16,6 +17,7 @@
       <div class="col text-end">
         <%= link_to update_detail_kegiatan_lama_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year,
       id_programs: [@programKegiatans.pluck(:id_giat).uniq]),
+      remote: true,
       data: { disable_with: 'Memproses....'},
       class:"btn btn-sm btn-primary" do %>
           <i class="fas fa-sync me-2"></i>

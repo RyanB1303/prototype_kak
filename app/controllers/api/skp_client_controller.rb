@@ -11,26 +11,26 @@ module Api
 
     def sync_sasaran
       UpdateSkpJob.perform_later(@kode_opd, @tahun, @bulan, @nip_asn)
-      redirect_to adminusers_path,
-                  success: "Update Sasaran #{@nip_asn} Dikerjakan. Harap menunggu..."
+      flash.now[:success] = "Update Sasaran #{@nip_asn} Dikerjakan. Harap menunggu..."
+      render 'shared/_notifikasi_simple'
     end
 
     def sync_pegawai
       UpdateUserJob.perform_later(@kode_opd, @tahun, @bulan)
-      redirect_to adminusers_path,
-                  success: "Update Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
+      flash.now[:success] = "Update Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
+      render 'shared/_notifikasi_simple'
     end
 
     def sync_struktur_pegawai
       UpdateStrukturJob.perform_later(@kode_opd, @tahun, @bulan)
-      redirect_to adminusers_path,
-                  success: "Update Struktur Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
+      flash.now[:success] = "Update Struktur Pegawai #{nama_opd} Dikerjakan. Harap menunggu.."
+      render 'shared/_notifikasi_simple'
     end
 
     def sync_opd
       UpdateOpdJob.perform_later(@kode_opd, @tahun)
-      redirect_to opds_path,
-                  success: "Update Sasaran Opd #{nama_opd} Dikerjakan. Harap menunggu..."
+      flash.now[:success] = "Update Sasaran Opd #{nama_opd} Dikerjakan. Harap menunggu..."
+      render 'shared/_notifikasi_simple'
     end
 
     private

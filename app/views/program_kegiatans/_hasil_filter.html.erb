@@ -6,7 +6,8 @@
     </div>
     <% if current_user.has_role? :super_admin %>
       <div class="col text-end">
-        <%= link_to sync_subkegiatan_opd_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year + 1), 
+        <%= link_to sync_subkegiatan_opd_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year + 1),
+            remote: true,
             data: { disable_with: 'Memproses....'},
             class:"btn btn-sm btn-tertiary" do %>
           <i class="fas fa-sync me-2"></i>
@@ -14,7 +15,8 @@
         <% end %>
       </div>
       <div class="col text-end">
-        <%= link_to sync_subkegiatan_opd_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year), 
+        <%= link_to sync_subkegiatan_opd_path(kode_opd: opd.id_opd_skp, tahun: Date.today.year),
+            remote: true,
             data: { disable_with: 'Memproses....'},
             class:"btn btn-sm btn-tertiary" do %>
           <i class="fas fa-sync me-2"></i>

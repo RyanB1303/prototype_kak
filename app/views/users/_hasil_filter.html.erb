@@ -6,13 +6,15 @@
     </div>
     <div class="col text-end">
       <% bulan = Date.today.month %>
-      <%= link_to sync_pegawai_path(kode_opd: kode_opd, tahun: Date.today.year, bulan: bulan), 
+      <%= link_to sync_pegawai_path(kode_opd: kode_opd, tahun: Date.today.year, bulan: bulan),
+      remote: true,
       data: { disable_with: 'Memproses....'}, 
       class:"btn btn-sm btn-primary" do %>
         <i class="fas fa-sync me-2"></i>
         Sync User
       <% end %>
-      <%= link_to sync_struktur_pegawai_path(kode_opd: kode_opd, tahun: Date.today.year, bulan: bulan), 
+      <%= link_to sync_struktur_pegawai_path(kode_opd: kode_opd, tahun: Date.today.year, bulan: bulan),
+      remote: true,
       data: { disable_with: 'Memproses....'}, 
       class:"btn btn-sm btn-primary" do %>
         <i class="fas fa-sync me-2"></i>
@@ -54,6 +56,7 @@
               <% if current_user.has_role? :admin or current_user.has_role? :super_admin %>
                 <% unless user.has_role? :admin %>
                   <%= link_to sync_sasaran_path(kode_opd: user.opd.kode_unik_opd, tahun: Date.today.year, bulan: bulan, nip_asn: user.nik),
+                      remote: true,
                       data: { disable_with: 'Memproses....'}, 
                       class:"btn btn-sm btn-primary" do %>
                     <i class="fas fa-sync me-2"></i>

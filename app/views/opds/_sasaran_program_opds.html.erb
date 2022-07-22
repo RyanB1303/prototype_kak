@@ -7,6 +7,7 @@
       <% if current_user.has_role? :super_admin %>
         <div class="col text-end">
           <%= link_to sync_data_opd_path(tahun: Date.today.year + 1),
+                remote: true,
                 data: { disable_with: 'Memproses....'},
                 class:"btn btn-sm btn-danger" do %>
             <i class="fas fa-sync me-2"></i>
@@ -15,6 +16,7 @@
         </div>
         <div class="col text-end">
           <%= link_to sync_opd_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year),
+                      remote: true,
                       data: { disable_with: 'Memproses....'}, 
                       class:"btn btn-sm btn-primary" do %>
             <i class="fas fa-sync me-2"></i>
@@ -57,65 +59,73 @@
             <td><%= opd.sasaran_opds&.first&.indikator_sasarans&.first&.indikator_kinerja || '-' %></td>
             <td>Eselon 3 :
               <br>
-              <% opd.kepala&.users.order(:id).each do |kabid| %>
-                - <%= kabid.nama %> - <%= kabid.jabatan %>
-                <br>
-                <% kabid.sasarans.order(:id).each.with_index(1) do |kabid_sas, no| %>
-                  <%= kabid_sas.sasaran_atasan_id || 'sasaran atasan nil' %> <%= no %>- <%= kabid_sas&.sasaran_kinerja || 'OO' %> -- <%= kabid_sas&.id_rencana || 'xx' %>
+              <% unless opd.kepala&.users.nil? %>
+                <% opd.kepala&.users.order(:id).each do |kabid| %>
+                  - <%= kabid.nama %> - <%= kabid.jabatan %>
                   <br>
-                <% end %>
-                <br>
-              <% end %>
-            </td>
-            <td>
-              <br>
-              <% opd.kepala.users.order(:id).each do |kabid| %>
-                - <%= kabid.nama %> - <%= kabid.jabatan %>
-                <br>
-                <% kabid.sasarans.order(:id).each do |kabid_sas| %>
-                  <%= kabid_sas&.id_rencana %>- <% kabid_sas&.indikator_sasarans.order(:sasaran_id).each do |ind| %>
-                    -- <%= ind.indikator_kinerja  %> [ <%= ind.target %> - <%= ind.satuan %> ]
+                  <% kabid.sasarans.order(:id).each.with_index(1) do |kabid_sas, no| %>
+                    <%= kabid_sas.sasaran_atasan_id || 'sasaran atasan nil' %> <%= no %>- <%= kabid_sas&.sasaran_kinerja || 'OO' %> -- <%= kabid_sas&.id_rencana || 'xx' %>
                     <br>
                   <% end %>
                   <br>
                 <% end %>
-                <br>
               <% end %>
             </td>
-            <td>Eselon 4 :
-              <br>
-              <% opd.kepala.users.order(:id).each do |kabid| %>
-                <% kabid.users.each do |kasi| %>
-                  - <%= kasi.nama %> - <%= kasi.jabatan %>
-                  <br>
-                  <% kasi.sasarans.order(:id).each.with_index(1) do |kasie_sas, no| %>
-                    <%= kasie_sas.sasaran_atasan_id || 'sasaran atasan nil' %> <%= no %>- <%= kasie_sas&.sasaran_kinerja || 'OO' %> -- <%= kasie_sas&.id_rencana || 'xx' %>
-                    <br>
-                  <% end %>
-                  <br>
-                <% end %>
-                <br>
-              <% end %>
-            </td>
-            <td>Indikator Kinerja Kegiatan SIPD</td>
-            <td>Pilih Sub Kegiatan</td>
             <td>
               <br>
-              <% opd.kepala.users.order(:id).each do |kabid| %>
-                <% kabid.users.each do |kasi| %>
-                  - <%= kasi.nama %> - <%= kasi.jabatan %>
+              <% unless opd.kepala&.users.nil? %>
+                <% opd.kepala.users.order(:id).each do |kabid| %>
+                  - <%= kabid.nama %> - <%= kabid.jabatan %>
                   <br>
-                  <% kasi.sasarans.order(:id).each do |kasie_sas| %>
-                    <%= kasie_sas&.id_rencana %>- 
-                    <% kasie_sas&.indikator_sasarans.order(:sasaran_id).each do |ind_kasi| %>
-                      -- <%= ind_kasi.indikator_kinerja %> [ <%= ind_kasi.target %> - <%= ind_kasi.satuan %> ]
+                  <% kabid.sasarans.order(:id).each do |kabid_sas| %>
+                    <%= kabid_sas&.id_rencana %>- <% kabid_sas&.indikator_sasarans.order(:sasaran_id).each do |ind| %>
+                      -- <%= ind.indikator_kinerja  %> [ <%= ind.target %> - <%= ind.satuan %> ]
                       <br>
                     <% end %>
                     <br>
                   <% end %>
                   <br>
                 <% end %>
-                <br>
+              <% end %>
+            </td>
+            <td>Eselon 4 :
+              <br>
+              <% unless opd.kepala&.users.nil? %>
+                <% opd.kepala.users.order(:id).each do |kabid| %>
+                  <% kabid.users.each do |kasi| %>
+                    - <%= kasi.nama %> - <%= kasi.jabatan %>
+                    <br>
+                    <% kasi.sasarans.order(:id).each.with_index(1) do |kasie_sas, no| %>
+                      <%= kasie_sas.sasaran_atasan_id || 'sasaran atasan nil' %> <%= no %>- <%= kasie_sas&.sasaran_kinerja || 'OO' %> -- <%= kasie_sas&.id_rencana || 'xx' %>
+                      <br>
+                    <% end %>
+                    <br>
+                  <% end %>
+                  <br>
+                <% end %>
+              <% end %>
+            </td>
+            <td>Indikator Kinerja Kegiatan SIPD</td>
+            <td>Pilih Sub Kegiatan</td>
+            <td>
+              <br>
+              <% unless opd.kepala&.users.nil? %>
+                <% opd.kepala.users.order(:id).each do |kabid| %>
+                  <% kabid.users.each do |kasi| %>
+                    - <%= kasi.nama %> - <%= kasi.jabatan %>
+                    <br>
+                    <% kasi.sasarans.order(:id).each do |kasie_sas| %>
+                      <%= kasie_sas&.id_rencana %>- 
+                      <% kasie_sas&.indikator_sasarans.order(:sasaran_id).each do |ind_kasi| %>
+                        -- <%= ind_kasi.indikator_kinerja %> [ <%= ind_kasi.target %> - <%= ind_kasi.satuan %> ]
+                        <br>
+                      <% end %>
+                      <br>
+                    <% end %>
+                    <br>
+                  <% end %>
+                  <br>
+                <% end %>
               <% end %>
             </td>
             <td>

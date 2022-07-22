@@ -1,5 +1,11 @@
 version: "3"
 services:
+  redis:
+    image: "redis:4.0"
+    ports:
+      - "63790:6379"
+    volumes:
+      - redis_data:/data
   postgres:
     image: "postgres:12"
     container_name: postgres
@@ -21,6 +27,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: app
     environment:
+      - REDIS_URL=redis://redis:6379
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432
     volumes:
       - .:/app:cached
@@ -30,9 +37,28 @@ services:
       - gem_cache:/usr/local/bundle/gems
     ports:
       - "3001:3000"
-    command: bundle exec rails server -b 0.0.0.0
+    command: bundle exec rails s -b 0.0.0.0
     depends_on:
       - postgres
+      - redis
+  workers:
+    build:
+      args:
+        RUBY_VERSION: '3.0.1'
+        NODE_MAJOR: '14'
+        BUNDLE_VERSION: '2.2.15'
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app:cached
+    command: bundle exec sidekiq -q default
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgres://postgres:postgres@postgres:5432
+    depends_on:
+      - app
+      - redis
+
 volumes:
   rails_cache:
   bundle:
@@ -40,3 +66,4 @@ volumes:
   gem_cache:
   db_data:
   shared_data:
+  redis_data:

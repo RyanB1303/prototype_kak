@@ -11,11 +11,13 @@
 #  penerima_manfaat       :string
 #  sasaran_atasan         :string
 #  sasaran_kinerja        :string
+#  sasaran_opd            :string
 #  satuan                 :string
 #  status                 :enum             default("draft")
 #  sumber_dana            :string
 #  tahun                  :string
 #  target                 :integer
+#  type                   :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  program_kegiatan_id    :bigint
@@ -242,10 +244,14 @@ class Sasaran < ApplicationRecord
   end
 
   def rekin_atasan
+    return nil if sasaran_atasan_id.nil?
+
     Sasaran.find_by(id_rencana: sasaran_atasan_id)
   end
 
   def indikator_rekin_atasan
+    return nil if sasaran_atasan_id.nil?
+
     rekin_atasan.indikator_sasarans
   end
 end

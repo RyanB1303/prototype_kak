@@ -10,24 +10,27 @@ module Api
     before_action :verify_kode_opd, only: [:sync_sasaran]
 
     def sync_sasaran
-      UpdateSkpJob.set(queue: "#{nama_opd}-#{@kode_opd}-sasaran-#{@tahun}-#{@bulan}")
-                  .perform_later(@kode_opd, @tahun, @bulan, @nip_asn)
-      redirect_to adminusers_path,
-                  success: "Update Sasaran #{@nip_asn} Dikerjakan. Harap menunggu..."
+      UpdateSkpJob.perform_later(@kode_opd, @tahun, @bulan, @nip_asn)
+      flash.now[:success] = "Update Sasaran #{@nip_asn} Dikerjakan. Harap menunggu..."
+      render 'shared/_notifikasi_simple'
     end
 
     def sync_pegawai
-      UpdateUserJob.set(queue: "#{nama_opd}-#{@kode_opd}-user-#{@tahun}-#{@bulan}")
-                   .perform_later(@kode_opd, @tahun, @bulan)
-      redirect_to adminusers_path,
-                  success: "Update Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
+      UpdateUserJob.perform_later(@kode_opd, @tahun, @bulan)
+      flash.now[:success] = "Update Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
+      render 'shared/_notifikasi_simple'
     end
 
     def sync_struktur_pegawai
-      UpdateStrukturJob.set(queue: "#{nama_opd}-#{@kode_opd}-user-#{@tahun}-#{@bulan}")
-                       .perform_later(@kode_opd, @tahun, @bulan)
-      redirect_to adminusers_path,
-                  success: "Update Struktur Pegawai #{nama_opd} Dikerjakan. Harap menunggu..."
+      UpdateStrukturJob.perform_later(@kode_opd, @tahun, @bulan)
+      flash.now[:success] = "Update Struktur Pegawai #{nama_opd} Dikerjakan. Harap menunggu.."
+      render 'shared/_notifikasi_simple'
+    end
+
+    def sync_opd
+      UpdateOpdJob.perform_later(@kode_opd, @tahun)
+      flash.now[:success] = "Update Sasaran Opd #{nama_opd} Dikerjakan. Harap menunggu..."
+      render 'shared/_notifikasi_simple'
     end
 
     private

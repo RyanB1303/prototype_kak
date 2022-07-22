@@ -4,6 +4,8 @@
 require_relative 'config/application'
 require 'resque/tasks'
 
-task 'resque:setup' => :environment
+task 'resque:setup' => :environment do
+  ENV['QUEUE'] = '*'
+end
 
 Rails.application.load_tasks

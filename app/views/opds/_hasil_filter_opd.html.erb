@@ -7,6 +7,7 @@
       <% if current_user.has_role? :super_admin %>
         <div class="col text-end">
           <%= link_to sync_data_opd_path(tahun: Date.today.year + 1),
+                remote: true,
                 data: { disable_with: 'Memproses....'},
                 class:"btn btn-sm btn-danger" do %>
             <i class="fas fa-sync me-2"></i>
@@ -36,13 +37,25 @@
         </thead>
         <tbody>
           <tr>
-            <td><%= opd.nama_opd %></td>
+            <td><%= opd.nama_opd %>
+              <% if current_user.has_role? :super_admin %>
+                - <%= opd.kode_unik_opd %>
+                - <%= opd.id %>
+              <% end %>
+            </td>
             <td><%= opd.nama_kepala %></td>
             <td><%= opd.nip_kepala %></td>
             <td><%= opd.pangkat_kepala %></td>
             <td><%= link_to edit_opd_path(opd), remote: true, data: {'bs-toggle': 'modal', 'bs-target': '#form-opd'}, class: 'btn btn-info' do  %>
                 <i class="fas fa-edit me-2"></i>
                 Edit
+              <% end %>
+              <%= link_to sync_opd_path(kode_opd: opd.kode_unik_opd, tahun: Date.today.year),
+                      remote: true,
+                      data: { disable_with: 'Memproses....'}, 
+                      class:"btn btn-sm btn-primary" do %>
+                <i class="fas fa-sync me-2"></i>
+                Sync Sasaran OPD
               <% end %>
             </td>
           </tr>

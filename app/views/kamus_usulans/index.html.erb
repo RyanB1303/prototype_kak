@@ -27,7 +27,8 @@
           </div>
           <% if current_user.has_role? :super_admin %>
             <div class="col text-end">
-              <%= link_to sync_kamus_usulan_path(kode_opd: '', tahun: 2023), 
+              <%= link_to sync_kamus_usulan_path(kode_opd: '', tahun: 2023),
+                                                remote: true,
                                                 data: { disable_with: 'Memproses....'},
                                                 class:"btn btn-sm btn-primary" do %>
                 <i class="fas fa-sync me-2"></i>

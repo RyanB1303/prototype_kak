@@ -12,7 +12,7 @@ module Api
     USERNAME = 'bappeda'
     PASSWORD = 'bapp7832KH'
 
-    def initialize(kode_opd, tahun, bulan, nip_asn = '')
+    def initialize(kode_opd, tahun, bulan = '', nip_asn = '')
       # @kode_opd = '2.16.2.20.2.21.04.0000'
       # @tahun = 2022
       # @bulan = 2
@@ -46,13 +46,15 @@ module Api
       update_struktur_pegawai(request)
     end
 
-    private
+    def update_opd
+      request = request_sasaran_opd(kode_opd, tahun)
+      update_sasaran_opd(request)
+    end
 
     def request_skp(kode_opd, tahun, bulan, nip_asn)
       H.post("#{URL}/sasaran-kinerja-pegawai/#{kode_opd}/#{tahun}/#{bulan}/#{nip_asn}",
              form: { username: USERNAME, password: PASSWORD })
     end
-    # https://skp.madiunkota.go.id/api/sasaran-kinerja-pegawai/1.02.2.14.0.00.03.0000/2022/5/199301212015071003
 
     def request_pegawai(kode_opd, tahun, bulan)
       H.post("#{URL}/data-pegawai-all/#{kode_opd}/#{tahun}/#{bulan}",
@@ -63,6 +65,13 @@ module Api
       H.post("#{URL}/struktur_pegawai/#{kode_opd}/#{tahun}/#{bulan}",
              form: { username: USERNAME, password: PASSWORD })
     end
+
+    def request_sasaran_opd(kode_opd, tahun)
+      H.post("#{URL}/opd-sasaran",
+             form: { username: USERNAME, password: PASSWORD, unit_id: kode_opd, tahun: tahun })
+    end
+
+    private
 
     def update_data_sasaran(response)
       data = Oj.load(response.body)
@@ -125,6 +134,22 @@ module Api
         data_p.store(:type, tipe)
         u = User.find_by(nik: data_p[:nik])
         u&.update(data_p)
+      end
+    end
+
+    # TODO: DRY UP THIS, DUPLICATE CODE !!!
+    def update_sasaran_opd(response)
+      data = Oj.load(response.body)
+      sasarans = data['data']
+      sasarans.each do |sasaran|
+        data_sasaran = {
+          id_rencana: sasaran['id'],
+          tahun: sasaran['tahun'],
+          sasaran_kinerja: sasaran['sasaran'],
+          sasaran_opd: sasaran['unit_id'],
+          created_at: Time.now, updated_at: Time.now
+        }
+        SasaranOpd.upsert(data_sasaran, unique_by: :id_rencana)
       end
     end
 

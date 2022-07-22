@@ -48,7 +48,7 @@ CREATE TABLE public.action_text_rich_texts (
     name character varying NOT NULL,
     body text,
     record_type character varying NOT NULL,
-    record_id bigint NOT NULL,
+    record_id integer NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -692,6 +692,7 @@ CREATE TABLE public.kaks (
     dasar_hukum text[] DEFAULT '{}'::text[],
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
+    user_id bigint,
     program_kegiatan_id bigint,
     gambaran_umum text,
     penerima_manfaat text,
@@ -1260,6 +1261,8 @@ CREATE TABLE public.pagus (
     volume integer,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
+    kak_id bigint,
+    sasaran_id bigint NOT NULL,
     total integer
 );
 
@@ -1652,14 +1655,17 @@ CREATE TABLE public.sasarans (
     updated_at timestamp(6) without time zone NOT NULL,
     program_kegiatan_id bigint,
     anggaran integer,
+    kak_id bigint,
     nip_asn character varying,
     id_rencana character varying,
     sumber_dana character varying,
     subkegiatan_tematik_id bigint,
     tahun character varying,
     status public.sasaran_status DEFAULT 'draft'::public.sasaran_status,
+    sasaran_atasan_id character varying,
     sasaran_atasan character varying,
-    sasaran_atasan_id character varying
+    type character varying,
+    sasaran_opd character varying
 );
 
 
@@ -1806,39 +1812,6 @@ CREATE SEQUENCE public.strategi_keluarans_id_seq
 --
 
 ALTER SEQUENCE public.strategi_keluarans_id_seq OWNED BY public.strategi_keluarans.id;
-
-
---
--- Name: subkegiatan_priorities; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.subkegiatan_priorities (
-    id bigint NOT NULL,
-    nama_priority character varying,
-    kode_priority character varying,
-    tahun character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: subkegiatan_priorities_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.subkegiatan_priorities_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: subkegiatan_priorities_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.subkegiatan_priorities_id_seq OWNED BY public.subkegiatan_priorities.id;
 
 
 --
@@ -2381,13 +2354,6 @@ ALTER TABLE ONLY public.strategi_keluarans ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
--- Name: subkegiatan_priorities id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.subkegiatan_priorities ALTER COLUMN id SET DEFAULT nextval('public.subkegiatan_priorities_id_seq'::regclass);
-
-
---
 -- Name: subkegiatan_tematiks id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -2798,14 +2764,6 @@ ALTER TABLE ONLY public.strategi_keluarans
 
 
 --
--- Name: subkegiatan_priorities subkegiatan_priorities_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.subkegiatan_priorities
-    ADD CONSTRAINT subkegiatan_priorities_pkey PRIMARY KEY (id);
-
-
---
 -- Name: subkegiatan_tematiks subkegiatan_tematiks_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3099,10 +3057,24 @@ CREATE INDEX index_musrenbangs_on_status ON public.musrenbangs USING btree (stat
 
 
 --
+-- Name: index_opds_on_kode_opd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_opds_on_kode_opd ON public.opds USING btree (kode_opd);
+
+
+--
 -- Name: index_opds_on_kode_unik_opd; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_opds_on_kode_unik_opd ON public.opds USING btree (kode_unik_opd);
+
+
+--
+-- Name: index_pagus_on_kak_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_pagus_on_kak_id ON public.pagus USING btree (kak_id);
 
 
 --
@@ -3260,14 +3232,6 @@ CREATE INDEX index_usulans_on_usulanable ON public.usulans USING btree (usulanab
 
 
 --
--- Name: comments fk_rails_03de2dc08c; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.comments
-    ADD CONSTRAINT fk_rails_03de2dc08c FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
 -- Name: tematik_sasarans fk_rails_09b7ad3d51; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3276,19 +3240,19 @@ ALTER TABLE ONLY public.tematik_sasarans
 
 
 --
--- Name: tematik_sasarans fk_rails_22e78acf56; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.tematik_sasarans
-    ADD CONSTRAINT fk_rails_22e78acf56 FOREIGN KEY (subkegiatan_tematik_id) REFERENCES public.subkegiatan_tematiks(id);
-
-
---
--- Name: anggarans fk_rails_283268988b; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: anggarans fk_rails_20122537ba; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.anggarans
-    ADD CONSTRAINT fk_rails_283268988b FOREIGN KEY (pajak_id) REFERENCES public.pajaks(id);
+    ADD CONSTRAINT fk_rails_20122537ba FOREIGN KEY (pajak_id) REFERENCES public.pajaks(id);
+
+
+--
+-- Name: perhitungans fk_rails_20122537ba; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.perhitungans
+    ADD CONSTRAINT fk_rails_20122537ba FOREIGN KEY (pajak_id) REFERENCES public.pajaks(id) ON DELETE SET NULL NOT VALID;
 
 
 --
@@ -3300,38 +3264,6 @@ ALTER TABLE ONLY public.background_migration_jobs
 
 
 --
--- Name: perhitungans fk_rails_2be8e57a69; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.perhitungans
-    ADD CONSTRAINT fk_rails_2be8e57a69 FOREIGN KEY (pajak_id) REFERENCES public.pajaks(id) ON DELETE SET NULL NOT VALID;
-
-
---
--- Name: permasalahans fk_rails_4bce9be9f2; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.permasalahans
-    ADD CONSTRAINT fk_rails_4bce9be9f2 FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id);
-
-
---
--- Name: program_kegiatans fk_rails_569fe757c0; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.program_kegiatans
-    ADD CONSTRAINT fk_rails_569fe757c0 FOREIGN KEY (subkegiatan_tematik_id) REFERENCES public.subkegiatan_tematiks(id);
-
-
---
--- Name: sasarans fk_rails_5880531b5c; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.sasarans
-    ADD CONSTRAINT fk_rails_5880531b5c FOREIGN KEY (nip_asn) REFERENCES public.users(nik);
-
-
---
 -- Name: kesenjangans fk_rails_617f862287; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -3340,19 +3272,51 @@ ALTER TABLE ONLY public.kesenjangans
 
 
 --
--- Name: sasarans fk_rails_78dfe7067c; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: users fk_rails_63c53507dc; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.sasarans
-    ADD CONSTRAINT fk_rails_78dfe7067c FOREIGN KEY (subkegiatan_tematik_id) REFERENCES public.subkegiatan_tematiks(id);
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT fk_rails_63c53507dc FOREIGN KEY (kode_opd) REFERENCES public.opds(kode_opd);
 
 
 --
--- Name: dasar_hukums fk_rails_9530516a5c; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: program_kegiatans fk_rails_63c53507dc; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.program_kegiatans
+    ADD CONSTRAINT fk_rails_63c53507dc FOREIGN KEY (kode_opd) REFERENCES public.opds(kode_opd);
+
+
+--
+-- Name: pagus fk_rails_8c0f370664; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.pagus
+    ADD CONSTRAINT fk_rails_8c0f370664 FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id);
+
+
+--
+-- Name: dasar_hukums fk_rails_8c0f370664; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.dasar_hukums
-    ADD CONSTRAINT fk_rails_9530516a5c FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id_rencana);
+    ADD CONSTRAINT fk_rails_8c0f370664 FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id_rencana);
+
+
+--
+-- Name: permasalahans fk_rails_8c0f370664; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.permasalahans
+    ADD CONSTRAINT fk_rails_8c0f370664 FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id);
+
+
+--
+-- Name: latar_belakangs fk_rails_8c0f370664; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.latar_belakangs
+    ADD CONSTRAINT fk_rails_8c0f370664 FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id);
 
 
 --
@@ -3361,14 +3325,6 @@ ALTER TABLE ONLY public.dasar_hukums
 
 ALTER TABLE ONLY public.active_storage_variant_records
     ADD CONSTRAINT fk_rails_993965df05 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
-
-
---
--- Name: latar_belakangs fk_rails_b420bec91b; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.latar_belakangs
-    ADD CONSTRAINT fk_rails_b420bec91b FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id);
 
 
 --
@@ -3393,6 +3349,30 @@ ALTER TABLE ONLY public.active_storage_attachments
 
 ALTER TABLE ONLY public.rincians
     ADD CONSTRAINT fk_rails_d41263ddba FOREIGN KEY (sasaran_id) REFERENCES public.sasarans(id);
+
+
+--
+-- Name: program_kegiatans fk_rails_df7dcdca82; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.program_kegiatans
+    ADD CONSTRAINT fk_rails_df7dcdca82 FOREIGN KEY (subkegiatan_tematik_id) REFERENCES public.subkegiatan_tematiks(id);
+
+
+--
+-- Name: sasarans fk_rails_df7dcdca82; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sasarans
+    ADD CONSTRAINT fk_rails_df7dcdca82 FOREIGN KEY (subkegiatan_tematik_id) REFERENCES public.subkegiatan_tematiks(id);
+
+
+--
+-- Name: sasarans fk_rails_eb38f6a96b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.sasarans
+    ADD CONSTRAINT fk_rails_eb38f6a96b FOREIGN KEY (nip_asn) REFERENCES public.users(nik);
 
 
 --
@@ -3476,7 +3456,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220223040427'),
 ('20220223041123'),
 ('20220225022813'),
-('20220228152349'),
 ('20220228153139'),
 ('20220301023835'),
 ('20220301032833'),
@@ -3565,6 +3544,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220627025154'),
 ('20220704014143'),
 ('20220719032829'),
-('20220719071026');
+('20220719071026'),
+('20220720064452');
 
 

@@ -13,6 +13,7 @@
                                                       id_giat: prog.id_giat,
                                                       tahun: Date.today.year),
                                                       method: :post,
+                                                      remote: true,
                                                       data: { disable_with: 'Memproses....'}, 
                                                       class:"btn btn-sm btn-primary" do %>
       <i class="fas fa-sync me-2"></i>

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-require 'resque/server'
+# require 'resque/server'
+require 'sidekiq/web'
+require 'sidekiq-status/web'
 Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :anggaran_hspks
   resources :anggaran_sbus
@@ -130,10 +132,17 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
     get 'jumlah', on: :collection
   end
 
-  # resque
-  authenticate :user, ->(u) { u.id == 1 } do
-    mount Resque::Server, at: '/jobs'
+  resources :sasaran_program_opds do
+    collection do
+      get :spip
+    end
   end
+  mount Sidekiq::Web, at: '/sidekiq'
+
+  # resque
+  # authenticate :user, ->(u) { u.id == 1 } do
+  #   get '/sidekiq'
+  # end
   # sasaran
   get '/verifikasi_sasarans', to: 'sasarans#verifikasi_sasaran'
   get '/laporan_sasarans', to: 'sasarans#laporan_sasaran'
@@ -227,6 +236,7 @@ Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   get '/sync_sasaran', to: 'api/skp_client#sync_sasaran'
   get '/sync_pegawai', to: 'api/skp_client#sync_pegawai'
   get '/sync_struktur_pegawai', to: 'api/skp_client#sync_struktur_pegawai'
+  get '/sync_opd', to: 'api/skp_client#sync_opd'
   get '/sync_subkegiatan', to: 'api/sipd_client#sync_subkegiatan'
   get '/sync_subkegiatan_opd', to: 'api/sipd_client#sync_subkegiatan_opd'
   get '/update_detail_kegiatan_lama', to: 'api/sipd_client#update_detail_kegiatan_lama'

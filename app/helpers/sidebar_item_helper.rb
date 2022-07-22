@@ -2,7 +2,6 @@ module SidebarItemHelper
   def asn_sidebar_items
     [
       { title: 'Pengarusutamaan Gender', href: gender_path, icon: 'fas fa-people-carry', identifier: 'gender' },
-      { title: 'Manajemen Resiko', href: '#', icon: 'fas fa-chart-line', identifier: 'man_risk' },
       { title: 'Laporan Atasan', href: atasan_laporans_path, icon: 'fas fa-chart-line', identifier: 'atasan' },
       { title: 'Laporan KAK', href: laporan_kak_path, icon: 'fas fa-file', identifier: 'laporan_kak' },
       { title: 'Laporan RAB', href: laporan_rka_path, icon: 'fas fa-money-check', identifier: 'laporan_rka' }
@@ -82,6 +81,12 @@ module SidebarItemHelper
     [
       { title: 'Rasionalisasi', href: rasionalisasi_path, identifier: 'rasionalisasi', icon: 'fas fa-balance-scale' },
       { title: 'Laporan Renja', href: '#', identifier: 'laporan_renja', icon: 'fas fa-receipt' }
+    ]
+  end
+
+  def spip_items
+    [
+      { title: 'SPIP', href: spip_sasaran_program_opds_path, identifier: 'sasaran_program_opds/spip' }
     ]
   end
 

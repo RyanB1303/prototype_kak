@@ -49,6 +49,7 @@
         <% collapsed_item_usulan_user = collapse_class('(\busulan_inisiatif|\busulan_musrenbang|\busulan_pokpir|\busulan_mandatori)') %>
         <% collapsed_item_anggaran = collapse_class('(\banggaran_ssh|\banggaran_sbu|\banggaran_hspk|\brekening)') %>
         <% collapsed_item_sipd_master = collapse_class('(\bmaster_urusan|\bmaster_bidang_urusan|\bmaster_programs|\bmaster_kegiatans|\bmaster_output|\bmaster_subkegiatans)') %>
+        <% collapsed_item_spip = collapse_class('(\bsasaran_program_opds/spip)') %>
         <% if current_user.has_role? :admin or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
           <hr>
           <p>Data Master</p>
@@ -231,6 +232,32 @@
             <% end %>
           </li>
         <% end %>
+        <li class="nav-item">
+          <span class="nav-link d-flex justify-content-between align-items-center <%= collapsed_item_spip[:menu] %>" data-bs-toggle="collapse" data-bs-target="#laporan_spip" aria-expanded="<%= collapsed_item_spip[:aria] %>">
+            <span>
+              <span class="sidebar-icon">
+                <i class="fas fa-chart-line icon icon-xs me-2"></i>
+              </span>
+              <span class="sidebar-text">Manajemen Resiko</span>
+            </span>
+            <span class="link-arrow">
+              <i class="fas fa-angle-right icon icon-sm"></i>
+            </span>
+          </span>
+          <div class="multi-level <%= collapsed_item_spip[:sub_menu] %>" role="list" id="laporan_spip" aria-expanded="<%= collapsed_item_spip[:aria] %>">
+            <ul class="flex-column nav">
+              <% spip_items.each do |spip| %>
+                <li class="nav-item<%= navigation_class(spip[:identifier]) %>" >
+                  <%= link_to(spip[:href], class: "nav-link") do %>
+                    <span>
+                      <span class="sidebar-text"><%= spip[:title] %></span>
+                    </span>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </li>
         <% item_filtered = current_user.instance_of?(Atasan) ? asn_sidebar_items :  asn_sidebar_items.reject! { |i| i[:title] == 'Laporan Atasan' }  %>
         <% item_filtered.each do |item| %>
           <li class="nav-item<%= navigation_class(item[:identifier]) %>">

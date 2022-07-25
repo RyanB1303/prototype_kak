@@ -51,12 +51,25 @@
               <br>
               - <%= opd.nama_opd %></td>
             <td>
-              <% opd.sasaran_opds.order(:id).each do |sas_opd| %>
-                <%= sas_opd.sasaran_kinerja %> - [ <%= sas_opd.id_rencana %>  ]
+              <% unless opd.kepala.nil? %>
+                <% opd.kepala.sasarans.order(:id).each.with_index(1) do |kepala_sas, nom| %>
+                  <%= nom %>- <%= kepala_sas&.sasaran_kinerja || 'OO' %> -- <%= kepala_sas&.id_rencana || 'xx' %>
+                  <br>
+                <% end %>
                 <br>
               <% end %>
             </td>
-            <td><%= opd.sasaran_opds&.first&.indikator_sasarans&.first&.indikator_kinerja || '-' %></td>
+            <td>
+              <% unless opd.kepala.nil? %>
+                <% opd.kepala.sasarans.order(:id).each do |kepala_sas| %>
+                  <% kepala_sas.indikator_sasarans.each do |ind_kepala_sas| %>
+                    -- <%= ind_kepala_sas.indikator_kinerja  %> [ <%= ind_kepala_sas.target %> - <%= ind_kepala_sas.satuan %> ]
+                  <% end %>
+                  <br>
+                <% end %>
+                <br>
+              <% end %>
+            </td>
             <td>Eselon 3 :
               <br>
               <% unless opd.kepala&.users.nil? %>

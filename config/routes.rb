@@ -3,6 +3,8 @@
 # require 'resque/server'
 require 'sidekiq/web'
 require 'sidekiq-status/web'
+require 'sidekiq_unique_jobs/web'
+
 Rails.application.routes.draw do # rubocop:disable Metrics/BlockLength
   resources :anggaran_hspks
   resources :anggaran_sbus

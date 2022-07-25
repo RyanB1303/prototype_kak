@@ -10,7 +10,7 @@ module Api
     before_action :verify_kode_opd, only: [:sync_sasaran]
 
     def sync_sasaran
-      UpdateSkpJob.perform_later(@kode_opd, @tahun, @bulan, @nip_asn)
+      UpdateSkpJob.perform_async(@kode_opd, @tahun, @bulan, @nip_asn)
       flash.now[:success] = "Update Sasaran #{@nip_asn} Dikerjakan. Harap menunggu..."
       render 'shared/_notifikasi_simple'
     end

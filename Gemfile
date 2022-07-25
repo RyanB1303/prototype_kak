@@ -85,6 +85,7 @@ gem 'rolify', '~> 6.0'
 gem 'scenic'
 gem 'sidekiq'
 gem 'sidekiq-status'
+gem 'sidekiq-unique-jobs'
 # gem 'strong_migrations'
 gem 'online_migrations'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

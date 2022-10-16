@@ -29,9 +29,9 @@
         </div>
       </div>
       <div class="card-body">
-        <div class="field">
+        <div class="field" data-gender-form-target="sasaran_subkegiatan">
           <%= form.label :sasaran_subkegiatan, class: 'form-label' %>
-          <%= form.text_field :sasaran_data, class: 'form-control', data: { gender_form_target: "sasaran" }, readonly: true %>
+          <%= form.text_field :sasaran_data, class: 'form-control', data: { gender_form_target: "sasaran_disabled" }, readonly: true %>
         </div>
         <div class="field">
           <%= form.label :penerima_manfaat, class: 'form-label' %>

@@ -2,13 +2,16 @@ import {Controller} from 'stimulus'
 
 
 export default class extends Controller {
-
   static targets = [
     "sasaran", "penerima_manfaat", "data_terpilah", "permasalahan",
     "penyebab_internal", "penyebab_external", "sasaran_subkegiatan",
-    "data_pembuka_wawasan","indikator_sasaran",
+    "data_pembuka_wawasan","indikator_sasaran", "data_baseline",
     "target_indikator", "satuan_indikator", "rencana_aksi",
     "program_kegiatan_id", "sasaran_id"]
+
+  static values = {
+    sasaran: String
+  }
 
   connect() {
     if (this.hasSasaran_idTarget) {
@@ -42,10 +45,31 @@ export default class extends Controller {
       .then((html) => {
         this.data_pembuka_wawasanTarget.innerHTML = html
       })
-    const data_rencana_aksi = fetch(`/program_kegiatans/${id_program}/rencana_aksi`)
+  }
+
+  rencana_aksiTargetConnected() {
+    this.get_renaksi(this.sasaranValue)
+  }
+
+  data_baselineTargetConnected() {
+    this.get_data_sasaran(this.sasaranValue)
+  }
+
+  get_renaksi(id_sasaran) {
+    fetch(`/sasarans/${id_sasaran}/rencana_aksi`)
       .then((res) => res.text())
       .then((html) => {
         this.rencana_aksiTarget.innerHTML = html
+      })
+  }
+
+  get_data_sasaran(id_sasaran) {
+    fetch(`/sasarans/${id_sasaran}/data_detail.json`)
+      .then(response => response.json())
+      .then((data) => {
+        this.sasaranTarget.value = data.sasaran_kinerja
+        this.penerima_manfaatTarget.value = data.penerima_manfaat
+        this.data_terpilahTarget.value = data.data_terpilah
       })
   }
 }

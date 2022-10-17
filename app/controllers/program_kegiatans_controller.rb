@@ -25,6 +25,16 @@ class ProgramKegiatansController < ApplicationController
     end
   end
 
+  def detail_sasarans
+    @program_kegiatan = ProgramKegiatan.find(params[:id])
+    render partial: 'detail_sasarans', locals: { program_kegiatan: @program_kegiatan }
+  end
+
+  def rencana_aksi
+    @program_kegiatan = ProgramKegiatan.find(params[:id])
+    render partial: 'rencana_aksi_program_kegiatan', locals: { program_kegiatan: @program_kegiatan }
+  end
+
   def admin_sub_kegiatan
     @filter_url = "filter_subkegiatan"
     render :admin_program_kegiatan

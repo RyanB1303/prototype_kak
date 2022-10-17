@@ -1,0 +1,31 @@
+<%= form_with(model: Gender.new) do |form| %>
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5>Baseline</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="field">
+      <%= form.label :tahun, class: 'form-label' %>
+      <%= form.text_field :tahun, class: 'form-control', data: { gender_form_target: "tahun" } %>
+    </div>
+    <div class="field">
+      <%= form.label :sasaran_subkegiatan, class: 'form-label' %>
+      <%= form.text_field :sasaran_subkegiatan, class: 'form-control', data: { gender_form_target: "sasaran" } %>
+    </div>
+    <div class="field">
+      <%= form.label :penerima_manfaat, class: 'form-label' %>
+      <%= form.text_field :penerima_manfaat, class: 'form-control', data: { gender_form_target: "penerima_manfaat" } %>
+    </div>
+    <div class="field">
+      <%= form.label :data_terpilah, class: 'form-label' %>
+      <%= form.text_field :data_terpilah,multiple: true, class: 'form-control', data: { gender_form_target: "data_terpilah" } %>
+    </div>
+  </div>
+</div>
+<% end %>

@@ -48,6 +48,15 @@ selenium_app_host = ENV.fetch("SELENIUM_APP_HOST") do
         .ip_address
 end
 
+Capybara.register_driver :headless_chrome do |app|
+  Capybara::Selenium::Driver.new app,
+                                 browser: :chrome
+end
+
+Capybara.default_driver = :headless_chrome
+
+Capybara.javascript_driver = :headless_chrome
+
 Capybara.configure do |config|
   config.server = :puma, { Silent: true }
   config.server_host = selenium_app_host

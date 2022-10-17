@@ -14,182 +14,26 @@
     <div class="field">
       <%= render 'templates/subkegiatan_card', form: form, gender: gender %>
     </div>
-    <div class="field">
-      <%= render 'templates/sasarans_card', form: form %>
-    </div>
 
-    <div class="card border-2 shadow mb-3">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="row align-items-center">
-            <div class="col">
-              <h5>Data Pembuka Wawasan</h5>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="field" data-gender-form-target="sasaran_subkegiatan">
-          <%= form.label :sasaran_subkegiatan, class: 'form-label' %>
-          <%= form.text_field :sasaran_data, class: 'form-control', data: { gender_form_target: "sasaran_disabled" }, readonly: true %>
-        </div>
-        <div class="field">
-          <%= form.label :penerima_manfaat, class: 'form-label' %>
-          <%= form.text_field :sasaran_penerima_manfaat, class: 'form-control', data: { gender_form_target: "penerima_manfaat" }, readonly: true %>
-        </div>
-        <div class="field">
-          <%= form.label :data_terpilah, class: 'form-label' %>
-          <%= form.text_field :sasaran_data_terpilah, class: 'form-control', data: { gender_form_target: "data_terpilah" }, readonly: true %>
-        </div>
-        <div class="field">
-          <%= form.label :permasalahan, class: 'form-label' %>
-          <%= form.text_field :permasalahan_wawasan, class: 'form-control', data: { gender_form_target: "permasalahan" }, readonly: true %>
-        </div>
-      </div>
-    </div>
+    <%= render 'data_pembuka_wawasan', form: form %>
 
-
-    <div class="card border-2 shadow mb-3">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="row align-items-center">
-            <div class="col">
-              <h5>Isu Gender</h5>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="card border-2 shadow mb-3">
-          <div class="card-header">
-            <div class="row align-items-center">
-              <div class="row align-items-center">
-                <div class="col">
-                  <h5>Faktor Kesenjangan </h5>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <div class="field">
-              <%= form.label :akses, class: 'form-label' %>
-              <%= form.text_field :akses, class: 'form-control' %>
-            </div>
-            <div class="field">
-              <%= form.label :partisipasi, class: 'form-label' %>
-              <%= form.text_field :partisipasi, class: 'form-control' %>
-            </div>
-            <div class="field">
-              <%= form.label :kontrol, class: 'form-label' %>
-              <%= form.text_field :kontrol, class: 'form-control' %>
-            </div>
-            <div class="field">
-              <%= form.label :manfaat, class: 'form-label' %>
-              <%= form.text_field :manfaat, class: 'form-control' %>
-            </div>
-          </div>
-        </div>
-
-        <div class="field">
-          <%= form.label :penyebab_internal, class: 'form-label' %>
-          <%= form.text_field :penyebab_internal,multiple: true, class: 'form-control', data: { gender_form_target: 'penyebab_internal' } %>
-        </div>
-        <%= add_new_field("Tambah Penyebab Internal", form, :penyebab_internal, gender )  %>
-        <div class="field">
-          <%= form.label :penyebab_external, class: 'form-label' %>
-          <%= form.text_field :penyebab_external, class: 'form-control', data: { gender_form_target: 'penyebab_external' }, name: "gender[penyebab_external][]" %>
-        </div>
-        <%= add_new_field("Tambah Penyebab External", form, :penyebab_external, gender )  %>
-      </div>
-    </div>
-
-    <div class="card border-2 shadow mb-3">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="row align-items-center">
-            <div class="col">
-              <h5>Reformulasi Tujuan</h5>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <%= form.label :reformulasi_tujuan, class: 'form-label' %>
-          <%= form.text_area :reformulasi_tujuan, class: 'form-control', rows: 8, data: { gender_form_target: 'sasaran' } %>
-        </div>
-      </div>
-    </div>
-    <%# div for render rencana aksi table from selected sasarans%>
+    <%# div for render rencana aksi table from selected sasarans %>
     <div data-gender-form-target="rencana_aksi">
     </div>
     <%# end %>
-    <div class="card border-2 shadow mb-3">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="row align-items-center">
-            <div class="col">
-              <h5>Baseline</h5>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <%= form.label :sasaran_subkegiatan, class: 'form-label' %>
-          <%= form.text_field :sasaran_subkegiatan, class: 'form-control', data: { gender_form_target: "sasaran" } %>
-        </div>
-        <div class="field">
-          <%= form.label :penerima_manfaat, class: 'form-label' %>
-          <%= form.text_field :penerima_manfaat, class: 'form-control', data: { gender_form_target: "penerima_manfaat" } %>
-        </div>
-        <div class="field">
-          <%= form.label :data_terpilah, class: 'form-label' %>
-          <%= form.text_field :data_terpilah,multiple: true, class: 'form-control', data: { gender_form_target: "data_terpilah" } %>
-        </div>
-        <%= add_new_field("Tambah Data", form, :data_terpilah, gender )  %>
-      </div>
+    <div class="actions">
+      <%= form.submit "Simpan Gender Analysis Pathway" %>
     </div>
-    <div class="card border-2 shadow mb-3">
-      <div class="card-header">
-        <div class="row align-items-center">
-          <div class="row align-items-center">
-            <div class="col">
-              <h5>Indikator</h5>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card-body">
-        <div class="field">
-          <%= form.label :indikator, class: 'form-label' %>
-          <%= form.text_field :indikator, class: 'form-control', data: { gender_form_target: "indikator_sasaran" } %>
-        </div>
-        <div class="field">
-          <%= form.label :target, class: 'form-label' %>
-          <%= form.text_field :target, class: 'form-control', data: { gender_form_target: "target_indikator" } %>
-        </div>
-        <div class="field">
-          <%= form.label :satuan, class: 'form-label' %>
-          <%= form.text_field :satuan, class: 'form-control', data: { gender_form_target: "satuan_indikator" } %>
-        </div>
-      </div>
-    </div>
-  </div>
+  <% end %>
 
-  <div class="actions">
-    <%= form.submit "Simpan Gender Analysis Pathway" %>
-  </div>
-<% end %>
-
- <script>
-  $(function() {
-    $('form').on('click', '.add_fields_<%= gender.id %>', function(event) {
-      let regexp, time;
-      time = new Date().getTime();
-      regexp = new RegExp($(this).data('id'), 'g')
-      $(this).before($(this).data('fields').replace(regexp, time))
-      return event.preventDefault()
+  <script>
+    $(function() {
+      $('form').on('click', '.add_fields_<%= gender.id %>', function(event) {
+        let regexp, time;
+        time = new Date().getTime();
+        regexp = new RegExp($(this).data('id'), 'g')
+        $(this).before($(this).data('fields').replace(regexp, time))
+        return event.preventDefault()
+      });
     });
-  });
-</script>
+  </script>

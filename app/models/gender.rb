@@ -31,9 +31,11 @@ class Gender < ApplicationRecord
   # belongs_to :sasaran, optional: true
   has_many :sasarans, through: :program_kegiatan
 
+  serialize :sasaran_subkegiatan, Array
   serialize :penyebab_internal, Array
   serialize :penyebab_external, Array
   serialize :data_terpilah, Array
+  serialize :penerima_manfaat, Array
 
   # validates :sasaran_id, presence: true
   validates :program_kegiatan_id, presence: true
@@ -47,9 +49,15 @@ class Gender < ApplicationRecord
   validates :penyebab_internal, presence: true
   validates :penyebab_external, presence: true
 
+  before_save :remove_blank_sasaran_subkegiatan
   before_save :remove_blank_penyebab_internal
   before_save :remove_blank_penyebab_external
   before_save :remove_blank_data_terpilah
+  before_save :remove_blank_penerima_manfaat
+
+  def remove_blank_sasaran_subkegiatan
+    sasaran_subkegiatan.reject!(&:blank?)
+  end
 
   def remove_blank_penyebab_internal
     penyebab_internal.reject!(&:blank?)
@@ -61,6 +69,10 @@ class Gender < ApplicationRecord
 
   def remove_blank_data_terpilah
     data_terpilah.reject!(&:blank?)
+  end
+
+  def remove_blank_penerima_manfaat
+    penerima_manfaat.reject!(&:blank?)
   end
 
   def faktor_kesenjangan

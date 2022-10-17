@@ -23,6 +23,7 @@ class SasaransController < ApplicationController
 
   def data_detail
     @sasaran = Sasaran.find(params[:id])
+    render partial: 'templates/data_pembuka_wawasan_card', locals: { sasaran: @sasaran }
   end
 
   def rencana_aksi

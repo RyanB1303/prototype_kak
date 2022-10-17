@@ -1,0 +1,21 @@
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5>Isu Gender</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="field">
+      <%= form.label :penyebab_internal, class: 'form-label' %>
+      <%= form.text_field :penyebab_internal,multiple: true, class: 'form-control', data: { gender_form_target: 'penyebab_internal' } %>
+    </div>
+    <div class="field">
+      <%= form.label :penyebab_external, class: 'form-label' %>
+      <%= form.text_field :penyebab_external, class: 'form-control', data: { gender_form_target: 'penyebab_external' }, name: "gender[penyebab_external][]" %>
+    </div>
+  </div>
+</div>

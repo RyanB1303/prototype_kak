@@ -1,0 +1,16 @@
+<div class="field">
+  <%= tag.label :sasaran_subkegiatan, class: 'form-label' %>
+  <%= tag.text_field :sasaran_data, value: @sasaran.sasaran_kinerja ,class: 'form-control', data: { gender_form_target: "sasaran" }, readonly: true %>
+</div>
+<div class="field">
+  <%= tag.label :penerima_manfaat, class: 'form-label' %>
+  <%= tag.text_field :sasaran_penerima_manfaat, class: 'form-control', data: { gender_form_target: "penerima_manfaat" }, readonly: true %>
+</div>
+<div class="field">
+  <%= tag.label :data_terpilah, class: 'form-label' %>
+  <%= tag.text_field :sasaran_data_terpilah, class: 'form-control', data: { gender_form_target: "data_terpilah" }, readonly: true %>
+</div>
+<div class="field">
+  <%= tag.label :permasalahan, class: 'form-label' %>
+  <%= tag.text_field :permasalahan_wawasan, class: 'form-control', data: { gender_form_target: "permasalahan" }, readonly: true %>
+</div>

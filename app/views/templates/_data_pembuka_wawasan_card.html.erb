@@ -1,0 +1,22 @@
+<%= form_with(model: sasaran) do |form| %>
+  <div class="field">
+    <%= form.label :sasaran_subkegiatan, class: 'form-label' %>
+    <%= form.text_field :sasaran_kinerja,class: 'form-control', data: { gender_form_target: "sasaran" }, readonly: true %>
+  </div>
+  <div class="field">
+    <%= form.label :penerima_manfaat, class: 'form-label' %>
+    <%= form.text_field :penerima_manfaat, class: 'form-control', data: { gender_form_target: "penerima_manfaat" }, readonly: true %>
+  </div>
+  <%= form.fields_for(:rincian) do |form_rincian| %>
+    <div class="field">
+      <%= form_rincian.label :data_terpilah, class: 'form-label' %>
+      <%= form_rincian.text_field :data_terpilah, class: 'form-control', data: { gender_form_target: "data_terpilah" }, readonly: true %>
+    </div>
+  <% end %>
+  <%= form.fields_for(:permasalahans) do |form_permasalahan| %>
+    <div class="field">
+      <%= form_permasalahan.label :permasalahan, class: 'form-label' %>
+      <%= form_permasalahan.text_field :permasalahan, class: 'form-control', data: { gender_form_target: "permasalahan" }, readonly: true %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,22 +1,14 @@
 <div class="card border-2 shadow mb-3">
   <div class="card-header">
     <div class="row align-items-center">
-      <div class="row align-items-center">
-        <div class="col">
-          <h5>Rencana Aksi</h5>
+      <div class="row align-items-center mb-3">
+        <div class="col-8">
+          <span class="fs-5 fw-bold mb-0">Rencana Aksi dan Anggaran <%= sasaran.sasaran_kinerja %></span>
         </div>
       </div>
     </div>
   </div>
   <div class="card-body">
-    <div class="row align-items-center mb-3">
-      <div class="col-8">
-        <span class="fs-5 fw-bold mb-0">Rencana Aksi dan Anggaran</span>
-      </div>
-      <div class="col text-end">
-        <%= link_to 'Tambah Tahapan', new_sasaran_tahapan_path(sasaran) ,remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},  class: "btn btn-sm btn-info" %>
-      </div>
-    </div>
     <div class="table-responsive">
       <table class="table table-sm align-items-center">
         <caption class="waktu-renaksi">
@@ -27,18 +19,8 @@
           <tr>
             <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
             <th class="border-bottom border-end" scope="col" rowspan="2">Tahapan Kerja</th>
-            <% (1..12).each do |i| %>
-              <th class="border-bottom border-end text-center" scope="col"><%= i %></th>
-            <% end %>
-            <th class="border-bottom border-end text-center" scope="col">Jumlah</th>
             <th class="border-bottom border-end text-center" scope="col" rowspan="2">Anggaran</th>
             <th class="border-bottom border-end" scope="col" rowspan="2">Keterangan</th>
-            <th class="border-bottom border-end text-center" scope="col" rowspan="2">Action</th>
-          </tr>
-          <tr>
-            <% (1..13).each do |item| %>
-              <td class="border border-gray-900 bg-tertiary text-center text-gray-300" scope="col">T</td>
-            <% end %>
           </tr>
         </thead>
         <tbody>
@@ -46,32 +28,14 @@
             <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
               <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= index %></td>
               <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
-              <% (1..12).each do |bulan| %>
-                <%= aksi_di_bulan(sasaran, tahapan, bulan, disabled: true) %>
-              <% end %>
-              <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.jumlah_target or '-' %></td>
-              <td class="fw-bolder text-gray-500 border text-center">
-                <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2" %>
-              </td>
+              <td class="fw-bolder text-gray-500 border text-center">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
               <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
-              <td class="fw-bolder text-gray-500 text-center border-end">
-                <%= link_to edit_sasaran_tahapan_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'}, class: "m-3" do %>
-                  <i class="fa fa-pencil-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-                <% end %>
-                <%= link_to sasaran_tahapan_path(sasaran, tahapan), method: :delete, data: { confirm_swal: "Hapus Tahapan #{tahapan.tahapan_kerja}?"}, class: "m-3" do %>
-                  <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
-                <% end %>
-              </td>
             </tr>
           <% end %>
         </tbody>
         <tfoot>
           <tr>
             <td class="border-bottom border-start border-end" colspan="2">Total</td>
-            <% (1..12).each do |i| %>
-              <td class="border-bottom border-end text-center"><%= sasaran.total_target_aksi_bulan[i] %></td>
-            <% end %>
-            <td class="border-bottom border-end text-center"><%= sasaran.jumlah_target %></td>
             <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(sasaran.total_anggaran_dengan_komentar) %></td>
             <td class="border-bottom border-end" colspan="2"></td>
           </tr>

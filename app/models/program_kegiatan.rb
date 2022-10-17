@@ -77,6 +77,8 @@ class ProgramKegiatan < ApplicationRecord
                                              where(jenis: 'Renstra', sub_jenis: 'Subkegiatan')
                                            }, class_name: 'Indikator', foreign_key: 'kode', primary_key: 'kode_sub_giat'
 
+  accepts_nested_attributes_for :sasarans
+
   scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
 
   scope :programs, -> { select("DISTINCT ON(program_kegiatans.kode_program) program_kegiatans.*") }

@@ -57,6 +57,7 @@ class Sasaran < ApplicationRecord
   has_one :rincian, dependent: :destroy
   has_many :permasalahans, dependent: :destroy
   has_many :latar_belakangs, dependent: :destroy
+  has_many :genders
 
   accepts_nested_attributes_for :rincian, update_only: true
   accepts_nested_attributes_for :tahapans
@@ -93,6 +94,7 @@ class Sasaran < ApplicationRecord
   scope :biru, -> { select(&:selesai?).reject(&:lengkap?).size }
   scope :dengan_sub_kegiatan, -> { joins(:program_kegiatan) }
   scope :dengan_rincian, -> { joins(:rincian).includes(:tahapans).where.not(tahapans: { id_rencana: nil }) }
+  scope :belum_ada_genders, -> { where.missing(:genders) }
 
   SUMBERS = { dana_transfer: 'Dana Transfer', dak: 'DAK', dbhcht: 'DBHCHT', bk_provinsi: 'BK Provinsi',
               blud: 'BLUD' }.freeze
@@ -297,5 +299,9 @@ class Sasaran < ApplicationRecord
 
   def permasalahan_sasaran
     permasalahans.map(&:permasalahan).join('.')
+  end
+
+  def in_gender?
+    genders.any?
   end
 end

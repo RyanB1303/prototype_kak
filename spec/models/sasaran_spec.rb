@@ -99,6 +99,7 @@ RSpec.describe Sasaran, type: :model do
     it { should belong_to(:program_kegiatan).optional(true) }
     it { should have_many(:subkegiatan_tematiks) }
     it { should have_many(:tematik_sasarans) }
+    it { should have_many(:genders) }
   end
 
   context 'sasaran take usulan from different type' do

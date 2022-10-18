@@ -38,6 +38,7 @@ class Gender < ApplicationRecord
   serialize :data_terpilah, Array
   serialize :penerima_manfaat, Array
 
+  validates :tahun, presence: true, inclusion: { in: 2015..Date.today.year }
   validates :sasaran_id, presence: true
   validates :program_kegiatan_id, presence: true
   validates :sasaran_subkegiatan, presence: true
@@ -77,28 +78,28 @@ class Gender < ApplicationRecord
   end
 
   def faktor_kesenjangan
-    "akses: #{akses},\n" +
-      "partisipasi: #{partisipasi},\n" +
-      "kontrol: #{kontrol},\n" +
-      "manfaat: #{manfaat}."
+    "<b>AKSES</b>: #{akses}.\n\n" +
+      "<b>PARTISIPASI</b>: #{partisipasi}.\n\n" +
+      "<b>KONTROL</b>: #{kontrol}.\n\n" +
+      "<b>MANFAAT</b>: #{manfaat}."
   end
 
   def data_pembuka_wawasan
-    "tujuan: #{sasaran.sasaran_kinerja}.\n" +
-      "penerima manfaat: #{sasaran.penerima_manfaat}.\n" +
-      "data terpilah: #{sasaran.rincian.data_terpilah}.\n" +
-      "permasalahan: #{sasaran.permasalahan_sasaran}"
+    "<b>TUJUAN</b>: #{sasaran.sasaran_kinerja}.\n\n" +
+      "<b>PENERIMA MANFAAT</b>: #{sasaran.penerima_manfaat}.\n\n" +
+      "<b>DATA TERPILAH</b>: #{sasaran.rincian.data_terpilah}.\n\n" +
+      "<b>PERMASALAHAN</b>: #{sasaran.permasalahan_sasaran}"
   end
 
   def data_baseline
-    "tujuan: #{sasaran_subkegiatan}.\n" +
-      "penerima manfaat: #{penerima_manfaat}.\n" +
-      "data terpilah: #{data_terpilah_gender}."
+    "<b>TUJUAN</b>: #{sasaran_subkegiatan}.\n\n" +
+      "<b>PENERIMA MANFAAT</b>: #{penerima_manfaat}.\n\n" +
+      "<b>DATA TERPILAH</b>: #{data_terpilah_gender}."
   end
 
   def indikator_gender
-    "indikator: #{indikator}.\n" +
-      "target: #{target} #{satuan}."
+    "<b>INDIKATOR</b>: #{indikator}.\n\n" +
+      "<b>TARGET</b>: #{target} #{satuan}."
   end
 
   def data_terpilah_gender

@@ -5,15 +5,3 @@
 
     <%= render 'data_pembuka_wawasan' %>
   </div>
-  <script>
-    $(function() {
-      $('form').on('click', '.add_fields_<%= gender.id %>', function(event) {
-        console.log('reduce')
-        let regexp, time;
-        time = new Date().getTime();
-        regexp = new RegExp($(this).data('id'), 'g')
-        $(this).before($(this).data('fields').replace(regexp, time))
-        return event.preventDefault()
-      });
-    });
-  </script>

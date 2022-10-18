@@ -17,18 +17,20 @@ class GapGenderPdf < Prawn::Document
     move_down 20
     tabel_gender(gender)
     move_down 30
-    move_down 20
+    move_down 10
     ttd
   end
 
   def title
     text "GENDER ANALYSIS PATHWAY", align: :center
     move_down 3
+    text @nama_opd.upcase, align: :center
+    move_down 3
     text "Tahun: #{@tahun}", align: :center
   end
 
   def ttd
-    start_new_page if (cursor - 111).negative?
+    start_new_page if (cursor - 125).negative?
     bounding_box([bounds.width - 370, cursor - 5], width: bounds.width - 200) do
       text "Madiun,    #{I18n.l Date.today, format: '  %B %Y'}", size: 8, align: :center
       move_down 5
@@ -55,7 +57,16 @@ class GapGenderPdf < Prawn::Document
       { content:  "REFORMULASI TUJUAN", width: 70, align: :center },
       { content:  "RENCANA AKSI", width: 70, align: :center },
       { content:  "BASELINE", width: 70, align: :center },
-      { content:  "INDIKATOR", width: 70, align: :center }]]
+      { content:  "INDIKATOR", width: 70, align: :center }],
+     [{ content: "1", width: 70, align: :center },
+      { content:  "2", width: 70, align: :center },
+      { content:  "3", width: 70, align: :center },
+      { content:  "4", width: 70, align: :center },
+      { content:  "5", width: 70, align: :center },
+      { content:  "6", width: 70, align: :center },
+      { content:  "7", width: 70, align: :center },
+      { content:  "8", width: 70, align: :center },
+      { content:  "9", width: 70, align: :center }]]
   end
 
   def gender
@@ -77,13 +88,13 @@ class GapGenderPdf < Prawn::Document
 
   def tabel_gender(content_tabel)
     table(content_tabel, header: true) do
-      cells.style(size: 8)
+      cells.style(size: 8, inline_format: true)
     end
   end
 
   def tabel_maker(data)
-    make_table(data) do
-      cells.style(size: 8)
+    make_table(data, header: true) do
+      cells.style(size: 8, inline_format: true)
     end
   end
 end

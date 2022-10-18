@@ -16,6 +16,18 @@ export default class extends Controller {
     window.dispatchEvent(ajax_update_event)
   }
 
+  successWithoutModal(event) {
+    const [message, status, xhr] = event.detail
+    // event after successResponse
+    this.sweetalert(message.resText)
+  }
+
+  errorWithoutModal(event) {
+    const [message, status, xhr] = event.detail
+    // this.errorTarget.innerHTML = xhr.response
+    console.log(xhr)
+  }
+
   sweetalert(text) {
     Swal.fire({
       title: 'Sukses',

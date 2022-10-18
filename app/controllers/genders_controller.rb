@@ -108,7 +108,7 @@ class GendersController < ApplicationController
   def gender_params
     params.require(:gender).permit(:akses, :partisipasi, :kontrol, :manfaat,
                                    :sasaran_id, :program_kegiatan_id,
-                                   :indikator, :target,
+                                   :indikator, :target, :tahun,
                                    :satuan, :reformulasi_tujuan,
                                    penyebab_internal: [],
                                    penyebab_external: [],

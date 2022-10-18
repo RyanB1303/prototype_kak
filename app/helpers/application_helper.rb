@@ -21,4 +21,11 @@ module ApplicationHelper
     fields = f.text_field(model, multiple: true, value: '', class: 'form-control my-3')
     link_to(name, '#', class: "add_fields_#{dc.id}", data: { id: new_obj, fields: fields })
   end
+
+  def add_new_field_gender(name, f, model, dc)
+    new_obj = dc.object_id
+    fields = f.text_field(model, multiple: true, value: '', class: 'form-control my-3')
+    link_to(name, '#', class: "add_fields_#{dc.id}",
+                       data: { id: new_obj, fields: fields, action: 'click->gender-form#new_field' })
+  end
 end

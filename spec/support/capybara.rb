@@ -53,33 +53,30 @@ Capybara.register_driver :headless_chrome do |app|
                                  browser: :chrome
 end
 
-Capybara.default_driver = :headless_chrome
-
-Capybara.javascript_driver = :headless_chrome
-
 Capybara.configure do |config|
   config.server = :puma, { Silent: true }
   config.server_host = selenium_app_host
   config.server_port = 4000
 end
-RSpec.configure do |config|
-  config.before(:each, type: :system) do |example|
-    # `Capybara.app_host` is reset in the RSpec before_setup callback defined
-    #     # in `ActionDispatch::SystemTesting::TestHelpers::SetupAndTeardown`, which
-    #         # is annoying as hell, but not easy to "fix". Just set it manually every
-    #             # test run.
-    #                 Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
-    #
-    #                     # Allow Capybara and WebDrivers to access network if necessary
-    driver = if example.metadata[:js]
-               locality = ENV["SELENIUM_HOST"].present? ? :remote : :local
-               headless = "_headless" if ENV["DISABLE_HEADLESS"].blank?
+Capybara.javascript_driver = :local_selenium_headless
+# RSpec.configure do |config|
+#  config.before(:each, type: :system) do |example|
+#    # `Capybara.app_host` is reset in the RSpec before_setup callback defined
+#    #     # in `ActionDispatch::SystemTesting::TestHelpers::SetupAndTeardown`, which
+#    #         # is annoying as hell, but not easy to "fix". Just set it manually every
+#    #             # test run.
+#    #                 Capybara.app_host = "http://#{Capybara.server_host}:#{Capybara.server_port}"
+#    #
+#    #                     # Allow Capybara and WebDrivers to access network if necessary
+#    driver = if example.metadata[:js]
+#               locality = ENV["SELENIUM_HOST"].present? ? :remote : :local
+#               headless = "_headless" if ENV["DISABLE_HEADLESS"].blank?
 
-               "#{locality}_selenium#{headless}".to_sym
-             else
-               :rack_test
-             end
+#               "#{locality}_selenium#{headless}".to_sym
+#             else
+#               :rack_test
+#             end
 
-    driven_by driver
-  end
-end
+#    driven_by driver
+#  end
+# end

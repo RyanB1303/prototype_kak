@@ -15,6 +15,7 @@
 #  reformulasi_tujuan  :string
 #  sasaran_subkegiatan :string
 #  satuan              :string
+#  tahun               :string
 #  target              :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
@@ -28,8 +29,8 @@
 #
 class Gender < ApplicationRecord
   belongs_to :program_kegiatan, optional: true
-  # belongs_to :sasaran, optional: true
-  has_many :sasarans, through: :program_kegiatan
+  belongs_to :sasaran, optional: true
+  # has_many :sasarans, through: :program_kegiatan
 
   serialize :sasaran_subkegiatan, Array
   serialize :penyebab_internal, Array
@@ -37,7 +38,7 @@ class Gender < ApplicationRecord
   serialize :data_terpilah, Array
   serialize :penerima_manfaat, Array
 
-  # validates :sasaran_id, presence: true
+  validates :sasaran_id, presence: true
   validates :program_kegiatan_id, presence: true
   validates :sasaran_subkegiatan, presence: true
   validates :penerima_manfaat, presence: true

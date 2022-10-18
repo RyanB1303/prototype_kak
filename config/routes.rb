@@ -189,6 +189,9 @@ Rails.application.routes.draw do
       get :detail_sasarans
       get :rencana_aksi
     end
+    collection do
+      get :list_program_with_sasarans_rincian
+    end
   end
 
   resources :pajaks

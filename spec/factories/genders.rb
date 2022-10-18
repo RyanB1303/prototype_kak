@@ -15,6 +15,7 @@
 #  reformulasi_tujuan  :string
 #  sasaran_subkegiatan :string
 #  satuan              :string
+#  tahun               :string
 #  target              :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null

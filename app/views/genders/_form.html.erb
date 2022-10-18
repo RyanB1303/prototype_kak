@@ -1,30 +1,14 @@
-<%= form_with(model: gender) do |form| %>
-  <% if gender.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(gender.errors.count, "error") %> prohibited this gender from being saved:</h2>
-
-      <ul>
-        <% gender.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
   <div class="gender_analysis" data-controller="gender-form" data-action='change-select@document->gender-form#fill_data'>
     <div class="field">
-      <%= render 'templates/subkegiatan_card', form: form, gender: gender %>
+      <%= render 'templates/subkegiatan_card' %>
     </div>
 
-    <%= render 'data_pembuka_wawasan', form: form %>
-
-    <div class="actions">
-      <%= form.submit "Simpan Gender Analysis Pathway" %>
-    </div>
-  <% end %>
-
+    <%= render 'data_pembuka_wawasan' %>
+  </div>
   <script>
     $(function() {
       $('form').on('click', '.add_fields_<%= gender.id %>', function(event) {
+        console.log('reduce')
         let regexp, time;
         time = new Date().getTime();
         regexp = new RegExp($(this).data('id'), 'g')

@@ -9,12 +9,12 @@
     </div>
   </div>
   <div class="card-body">
-    <%= form.label :subkegiatan, class: 'form-label' %>
+    <%= content_tag(:label, "SubKegiatan", class: 'form-label') %>
 
-    <%= form.select(:program_kegiatan_id, options_for_select(ProgramKegiatan.pluck(:nama_subkegiatan, :id), selected: form.object.program_kegiatan_id), {include_blank: true},
+    <%= content_tag("select", options_for_select([]),
                     {
                       data: { controller: 'dropdown',
-                              'ajax--url': "/program_kegiatans.json",
+                              'ajax--url': "/program_kegiatans/list_program_with_sasarans_rincian.json",
                               "ajax--cache": "true",
                               dropdown_jenis_value: 'chain',
                               "placeholder": "Pilih SubKegiatan",

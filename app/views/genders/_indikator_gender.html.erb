@@ -1,28 +1,25 @@
-
-<%= form_with(model: Gender.new) do |form| %>
-  <div class="card border-2 shadow mb-3">
-    <div class="card-header">
+<div class="card border-2 shadow mb-3">
+  <div class="card-header">
+    <div class="row align-items-center">
       <div class="row align-items-center">
-        <div class="row align-items-center">
-          <div class="col">
-            <h5>Indikator</h5>
-          </div>
+        <div class="col">
+          <h5>Indikator</h5>
         </div>
       </div>
     </div>
-    <div class="card-body">
-      <div class="field">
-        <%= form.label :indikator, class: 'form-label' %>
-        <%= form.text_field :indikator, class: 'form-control', data: { gender_form_target: "indikator_sasaran" } %>
-      </div>
-      <div class="field">
-        <%= form.label :target, class: 'form-label' %>
-        <%= form.text_field :target, class: 'form-control', data: { gender_form_target: "target_indikator" } %>
-      </div>
-      <div class="field">
-        <%= form.label :satuan, class: 'form-label' %>
-        <%= form.text_field :satuan, class: 'form-control', data: { gender_form_target: "satuan_indikator" } %>
-      </div>
+  </div>
+  <div class="card-body">
+    <div class="field">
+      <%= form.label :indikator, class: 'form-label' %>
+      <%= form.text_field :indikator, class: 'form-control', data: { gender_form_target: "indikator_sasaran" } %>
+    </div>
+    <div class="field">
+      <%= form.label :target, class: 'form-label' %>
+      <%= form.text_field :target, class: 'form-control', data: { gender_form_target: "target_indikator" } %>
+    </div>
+    <div class="field">
+      <%= form.label :satuan, class: 'form-label' %>
+      <%= form.text_field :satuan, class: 'form-control', data: { gender_form_target: "satuan_indikator" } %>
     </div>
   </div>
-<% end %>
+</div>

@@ -26,10 +26,10 @@
         <tbody>
           <% sasaran.tahapans.order(:created_at).each.with_index(1) do |tahapan, index| %>
             <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
-              <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= index %></td>
-              <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
-              <td class="fw-bolder text-gray-500 border text-center">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
-              <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
+              <td class="fw-bolder border-start border-end" scope="row"><%= index %></td>
+              <td class="fw-bolder"><%= tahapan.tahapan_kerja %></td>
+              <td class="fw-bolder">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
+              <td class="fw-bolder"><%= tahapan.keterangan %></td>
             </tr>
           <% end %>
         </tbody>

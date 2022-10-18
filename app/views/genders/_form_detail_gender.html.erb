@@ -1,0 +1,52 @@
+<% @program_kegiatan.sasarans.dengan_rincian.each do |sasaran| %>
+  <div class="form_detail_genders" >
+  <%= form_with(model: Gender.new), remote: true do |form| %>
+    <% if gender.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(gender.errors.count, "error") %> prohibited this gender from being saved:</h2>
+
+        <ul>
+          <% gender.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="header my-3">
+      <div class="field">
+        <%= form.label :sasaran_subkegiatan, class: 'form-label' %>
+        <%= form.text_field :sasaran_kinerja,class: 'form-control', readonly: true %>
+      </div>
+      <div class="field">
+        <%= form.label :penerima_manfaat, class: 'form-label' %>
+        <%= form.text_field :penerima_manfaat, class: 'form-control', readonly: true %>
+      </div>
+        <div class="field">
+          <%= form_rincian.label :data_terpilah, class: 'form-label' %>
+          <%= form_rincian.text_field :data_terpilah, class: 'form-control', readonly: true %>
+        </div>
+        <div class="field">
+          <%= form_permasalahan.label :permasalahan, class: 'form-label' %>
+          <%= form_permasalahan.text_field :permasalahan, class: 'form-control', readonly: true %>
+        </div>
+        <%= render 'genders/akses_kontrol_manfaat_gender' %>
+      <div class="field">
+        <%= form.label :reformulasi_tujuan, class: 'form-label' %>
+        <%= form.text_area :sasaran_kinerja, class: 'form-control', rows: 3 %>
+      </div>
+    </div>
+
+    <div data-gender-form-target="data_baseline" data-controller="gender-form" data-gender-form-sasaran-value="<%= form.object.id %>">
+      <%= render 'genders/baseline' %>
+    </div>
+
+    <div data-gender-form-target="rencana_aksi" data-controller="gender-form" data-gender-form-sasaran-value="<%= form.object.id %>">
+    </div>
+
+
+    <%= render 'genders/indikator_gender' %>
+
+  <% end %>
+  <hr />
+  </div>
+<% end %>

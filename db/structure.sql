@@ -631,7 +631,9 @@ CREATE TABLE public.genders (
     penyebab_external character varying,
     penerima_manfaat character varying,
     sasaran_subkegiatan character varying,
-    tahun character varying
+    tahun character varying,
+    rencana_aksi character varying,
+    rencana_aksi_id character varying
 );
 
 
@@ -4062,6 +4064,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221010010305'),
 ('20221011022256'),
 ('20221011193500'),
-('20221018022814');
+('20221018022814'),
+('20221019073357');
 
 

@@ -48,7 +48,7 @@
       <%= render 'genders/baseline', form: form, gender: gender %>
     </div>
 
-    <div data-gender-form-target="rencana_aksi" data-controller="gender-form" data-gender-form-sasaran-value="<%= sasaran.id %>">
+    <div data-gender-form-target="rencana_aksi" data-controller="gender-form" data-gender-form-sasaran-value="<%= sasaran.id %>" data-fields='<%= form.check_box(:rencana_aksi, multiple: true) %>'>
     </div>
 
 

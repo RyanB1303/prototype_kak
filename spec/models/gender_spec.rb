@@ -13,6 +13,7 @@
 #  penyebab_external   :string
 #  penyebab_internal   :string
 #  reformulasi_tujuan  :string
+#  rencana_aksi        :string
 #  sasaran_subkegiatan :string
 #  satuan              :string
 #  tahun               :string
@@ -20,6 +21,7 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  program_kegiatan_id :bigint
+#  rencana_aksi_id     :string
 #  sasaran_id          :bigint
 #
 # Indexes

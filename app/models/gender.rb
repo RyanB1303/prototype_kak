@@ -13,6 +13,7 @@
 #  penyebab_external   :string
 #  penyebab_internal   :string
 #  reformulasi_tujuan  :string
+#  rencana_aksi        :string
 #  sasaran_subkegiatan :string
 #  satuan              :string
 #  tahun               :string
@@ -20,6 +21,7 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  program_kegiatan_id :bigint
+#  rencana_aksi_id     :string
 #  sasaran_id          :bigint
 #
 # Indexes
@@ -37,6 +39,7 @@ class Gender < ApplicationRecord
   serialize :penyebab_external, Array
   serialize :data_terpilah, Array
   serialize :penerima_manfaat, Array
+  serialize :rencana_aksi, Array
 
   validates :tahun, presence: true, inclusion: { in: 2015..Date.today.year }
   validates :sasaran_id, presence: true
@@ -51,12 +54,18 @@ class Gender < ApplicationRecord
   validates :manfaat, presence: true
   validates :penyebab_internal, presence: true
   validates :penyebab_external, presence: true
+  validates :rencana_aksi, presence: true
 
   before_validation :remove_blank_sasaran_subkegiatan
   before_validation :remove_blank_penyebab_internal
   before_validation :remove_blank_penyebab_external
   before_validation :remove_blank_data_terpilah
   before_validation :remove_blank_penerima_manfaat
+  before_validation :remove_blank_rencana_aksi
+
+  def remove_blank_rencana_aksi
+    rencana_aksi.reject!(&:blank?)
+  end
 
   def remove_blank_sasaran_subkegiatan
     sasaran_subkegiatan.reject!(&:blank?)

@@ -117,6 +117,7 @@ class GendersController < ApplicationController
                                    penyebab_external: [],
                                    data_terpilah: [],
                                    sasaran_subkegiatan: [],
+                                   rencana_aksi: [],
                                    penerima_manfaat: [])
   end
 end

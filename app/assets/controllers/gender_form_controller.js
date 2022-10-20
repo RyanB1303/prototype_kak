@@ -58,8 +58,6 @@ export default class extends Controller {
 
   rencana_aksiTargetConnected(element) {
     this.get_renaksi(this.sasaranValue)
-    const new_field = element
-    console.log(new_field)
   }
 
   data_baselineTargetConnected() {

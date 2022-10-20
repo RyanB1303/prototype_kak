@@ -41,7 +41,7 @@ class Gender < ApplicationRecord
   serialize :penerima_manfaat, Array
   serialize :rencana_aksi, Array
 
-  validates :tahun, presence: true, inclusion: { in: 2015..Date.today.year }
+  validates :tahun, presence: true
   validates :sasaran_id, presence: true
   validates :program_kegiatan_id, presence: true
   validates :sasaran_subkegiatan, presence: true
@@ -95,7 +95,8 @@ class Gender < ApplicationRecord
   end
 
   def data_pembuka_wawasan
-    "<b>TUJUAN</b>: #{sasaran.sasaran_kinerja}.\n\n" +
+    "<b>SASARAN</b>: #{sasaran.sasaran_kinerja}.\n\n" +
+      "<b>TUJUAN</b>: #{sasaran.sasaran_kinerja}.\n\n" +
       "<b>PENERIMA MANFAAT</b>: #{sasaran.penerima_manfaat}.\n\n" +
       "<b>DATA TERPILAH</b>: #{sasaran.rincian.data_terpilah}.\n\n" +
       "<b>PERMASALAHAN</b>: #{sasaran.permasalahan_sasaran}"
@@ -138,5 +139,19 @@ class Gender < ApplicationRecord
     content_tag(:ol, class: 'list_items') do
       list_items.each { |item| concat(content_tag(:li, item)) }
     end
+  end
+
+  def rencana_aksi_tahapan
+    if rencana_aksi.nil?
+      sasaran.tahapans.first.tahapan_kerja
+    else
+      rencana_aksi.is_a?(Array) ? rencana_aksi.join(',') : rencana_aksi
+    end
+  end
+
+  def program_kegiatan_subkegiatan
+    "PROGRAM: #{program_kegiatan.nama_program}.\n\n" +
+      "KEGIATAN: #{program_kegiatan.nama_kegiatan}.\n\n" +
+      "<b>SUBKEGIATAN</b>: #{program_kegiatan.nama_subkegiatan}."
   end
 end

@@ -3,6 +3,7 @@ import $ from 'jquery'
 
 
 export default class extends Controller {
+  static targets = ["tahun"]
   static values = {
     jenis: String,
     parent: String,
@@ -46,6 +47,7 @@ export default class extends Controller {
   disconnect() {
     this.select.select2('destroy');
   }
+
 
   jenis_dropdown_generator() {
     let jenis = this.jenisValue

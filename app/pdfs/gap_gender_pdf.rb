@@ -16,7 +16,6 @@ class GapGenderPdf < Prawn::Document
     title
     move_down 20
     tabel_gender(gender)
-    move_down 30
     move_down 10
     ttd
   end
@@ -72,13 +71,13 @@ class GapGenderPdf < Prawn::Document
   def gender
     # main table
     data_gender = header_tabel
-    data_gender << [{ content: @program_kegiatan.nama_subkegiatan },
+    data_gender << [{ content: @gender.program_kegiatan_subkegiatan },
                     { content: @gender.data_pembuka_wawasan },
                     { content: @gender.faktor_kesenjangan },
                     { content: @gender.penyebab_internal_non_html },
                     { content: @gender.penyebab_external_non_html },
                     { content: @gender.reformulasi_tujuan },
-                    { content: @gender.sasaran.tahapans.first.tahapan_kerja },
+                    { content: @gender.rencana_aksi_tahapan },
                     { content: @gender.data_baseline },
                     { content: @gender.indikator_gender }]
     # create cell

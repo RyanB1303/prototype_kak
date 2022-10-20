@@ -1,7 +1,7 @@
 <% @program_kegiatan.sasarans.belum_ada_genders.dengan_rincian.each.with_index(1) do |sasaran, index| %>
   <div class="form_detail_genders card border-0 mb-3" >
     <h3 class="header mt-2"><%= index %></h3>
-      <%= render 'genders/form_detail_gender', gender: Gender.new, sasaran: sasaran %>
+      <%= render 'genders/form_detail_gender', gender: Gender.new, sasaran: sasaran, form_count: index %>
   </div>
   <hr/>
 <% end %>

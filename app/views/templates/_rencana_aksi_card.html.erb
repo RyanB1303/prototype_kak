@@ -21,6 +21,7 @@
             <th class="border-bottom border-end" scope="col" rowspan="2">Tahapan Kerja</th>
             <th class="border-bottom border-end text-center" scope="col" rowspan="2">Anggaran</th>
             <th class="border-bottom border-end" scope="col" rowspan="2">Keterangan</th>
+            <th class="border-bottom border-end" scope="col" rowspan="2">Aksi</th>
           </tr>
         </thead>
         <tbody>
@@ -30,6 +31,9 @@
               <td class="fw-bolder"><%= tahapan.tahapan_kerja %></td>
               <td class="fw-bolder">Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %></td>
               <td class="fw-bolder"><%= tahapan.keterangan %></td>
+              <td class="fw-bolder">
+                <input name="gender[rencana_aksi][]" type="checkbox" value="<%= tahapan.tahapan_kerja %>" />
+              </td>
             </tr>
           <% end %>
         </tbody>

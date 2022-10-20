@@ -45,10 +45,10 @@
     </div>
 
     <div data-gender-form-target="data_baseline" data-controller="gender-form" data-gender-form-sasaran-value="<%= sasaran.id %>">
-      <%= render 'genders/baseline', form: form, gender: gender %>
+      <%= render 'genders/baseline', form: form, gender: gender, form_count: form_count  %>
     </div>
 
-    <div data-gender-form-target="rencana_aksi" data-controller="gender-form" data-gender-form-sasaran-value="<%= sasaran.id %>" data-fields='<%= form.check_box(:rencana_aksi, multiple: true) %>'>
+    <div data-gender-form-target="rencana_aksi" data-controller="gender-form" data-gender-form-sasaran-value="<%= sasaran.id %>">
     </div>
 
 

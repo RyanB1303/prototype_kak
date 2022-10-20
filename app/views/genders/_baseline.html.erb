@@ -11,7 +11,8 @@
   <div class="card-body">
     <div class="field">
       <%= form.label :tahun, class: 'form-label' %>
-      <%= form.text_field :tahun, class: 'form-control', data: { gender_form_target: "tahun" } %>
+      <%= form.select :tahun,[2020, 2021, 2022, 2023, 2024],{},
+        { class: 'form-control',id: form_count, data: { controller: 'dropdown', gender_form_target: "tahun", dropdown_target: "tahun" } }%>
       <p class="invalid-feedback" data-form-ajax-target="errorContainer" data-error-type="tahun"></p>
     </div>
     <div class="field">

@@ -13,12 +13,14 @@
     value: @nama %>
 </div>
 <% (2020..2024).each do |tahun| %>
+  <div id="<%= tahun %>">
   <%= form.hidden_field "renstra[indikator][][tahun]", value: tahun %>
   <%= form.hidden_field "renstra[indikator][][kode]", value: @kode %>
   <%= form.hidden_field "renstra[indikator][][kode_opd]", value: @kode_opd %>
   <%= form.hidden_field "renstra[indikator][][jenis]", value: @jenis %>
   <%= form.hidden_field "renstra[indikator][][sub_jenis]", value: @sub_jenis %>
   <%= form.hidden_field "renstra[indikator][][kode_indikator]", value: @kode_indikator %>
+  <%= form.hidden_field "renstra[indikator][][kotak]", value: @targets[tahun.to_s]&.[](:kotak) %>
   <%= form.hidden_field :_kode_indikator, value: @kode_indikator %>
   <div class="field">
   <%= form.label "indikator #{@sub_jenis} Tahun #{tahun}", class: 'form-label' %>
@@ -40,6 +42,8 @@
     <%= form.text_field "renstra[indikator][][pagu]", class: 'form-control', value: @targets[tahun.to_s]&.[](:pagu) %>
   </div>
   </div>
+  </div>
+  <button data-action="click->form-ajax#new_field">Click me</button>
 <% end %>
 <div class="field">
   <%= form.label :keterangan, class: 'form-label' %>

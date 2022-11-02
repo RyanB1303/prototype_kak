@@ -14,9 +14,8 @@ class GapGenderPdf < Prawn::Document
 
   def print
     title
-    move_down 20
+    move_down 15
     tabel_gender(gender)
-    move_down 30
     move_down 10
     ttd
   end
@@ -87,7 +86,7 @@ class GapGenderPdf < Prawn::Document
   private
 
   def tabel_gender(content_tabel)
-    table(content_tabel, header: true) do
+    table(content_tabel, header: 3) do
       cells.style(size: 8, inline_format: true)
     end
   end

@@ -34,7 +34,7 @@ class RenstraController < ApplicationController
         h[:kotak] = kotak
       end
     end
-    indikator = Indikator.upsert_all(@indikator, returning: %w[indikator tahun target satuan pagu])
+    indikator = Indikator.upsert_all(@indikator, returning: %w[indikator tahun target satuan pagu kotak])
     render json: { resText: 'Data disimpan', result: indikator }, status: :accepted if indikator
   end
 
@@ -88,6 +88,6 @@ class RenstraController < ApplicationController
 
   def indikator_params
     params.require(:renstra).permit(indikator: %i[indikator tahun satuan kode jenis sub_jenis target pagu keterangan
-                                                  kode_opd kode_indikator])
+                                                  kode_opd kode_indikator kotak])
   end
 end

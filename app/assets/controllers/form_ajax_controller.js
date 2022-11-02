@@ -41,6 +41,16 @@ export default class extends Controller {
     })
   }
 
+  new_field(event) {
+    event.preventDefault()
+    let i = 0
+    let dom_target = $(event.currentTarget).prev()
+    let clone = dom_target[0].cloneNode(true)
+    clone.id = "kotak-" + ++i;
+    let cek = $(clone).children('input[name="renstra[indikator][][kotak]"]').val(i)
+    $(event.currentTarget).before(clone)
+  }
+
   sweetalert(text) {
     Swal.fire({
       title: 'Sukses',

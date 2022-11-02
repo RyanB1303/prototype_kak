@@ -146,13 +146,15 @@ class ProgramKegiatan < ApplicationRecord
       :target,
       :satuan,
       :pagu,
+      :kotak,
       :tahun
-    ).each_with_object({}) do |(indikator, keterangan, target, satuan, pagu, tahun), result|
+    ).each_with_object({}) do |(indikator, keterangan, target, satuan, pagu, kotak, tahun), result|
       result[tahun] = {
         indikator: indikator,
         keterangan: keterangan,
         target: target,
         satuan: satuan,
+        kotak: kotak,
         pagu: pagu
       }
     end
@@ -176,13 +178,15 @@ class ProgramKegiatan < ApplicationRecord
       :target,
       :satuan,
       :pagu,
+      :kotak,
       :tahun
-    ).each_with_object({}) do |(indikator, keterangan, target, satuan, pagu, tahun), result|
+    ).each_with_object({}) do |(indikator, keterangan, target, satuan, pagu, kotak, tahun), result|
       result[tahun] = {
         indikator: indikator,
         keterangan: keterangan,
         target: target,
         satuan: satuan,
+        kotak: kotak,
         pagu: pagu
       }
     end
@@ -206,13 +210,15 @@ class ProgramKegiatan < ApplicationRecord
       :target,
       :satuan,
       :pagu,
+      :kotak,
       :tahun
-    ).each_with_object({}) do |(indikator, keterangan, target, satuan, pagu, tahun), result|
+    ).each_with_object({}) do |(indikator, keterangan, target, satuan, pagu, kotak, tahun), result|
       result[tahun] = {
         indikator: indikator,
         keterangan: keterangan,
         target: target,
         satuan: satuan,
+        kotak: kotak,
         pagu: pagu
       }
     end

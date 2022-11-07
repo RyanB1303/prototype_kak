@@ -3,7 +3,7 @@ import { Controller } from 'stimulus'
 //need sweet alert import
 
 export default class extends Controller {
-  static targets = ['isu_strategis']
+  static targets = ['isu_strategis', 'indikatorRenstra']
 
   static values = {
     target: String
@@ -15,6 +15,12 @@ export default class extends Controller {
   updateTargetValue(event) {
    const content = event.detail
    this.isu_strategisTarget.innerHTML = content.data
+  }
+
+  updateIndikatorRenstra(event) {
+   const content = event.detail
+    console.log(content)
+   this.indikatorRenstraTarget.innerHTML = content.html
   }
 
   appendForm(event) {

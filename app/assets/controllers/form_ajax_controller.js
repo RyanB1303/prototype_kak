@@ -10,7 +10,7 @@ export default class extends Controller {
     const [message, status, xhr] = event.detail
     const modal_target = event.params.modal 
     const modal = document.getElementById(modal_target)
-    const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message.result  } })
+    const ajax_update_event = new CustomEvent("ajax-update", { detail: { data: message.result, html: message.indikator_html  } })
     // event after successResponse
     Modal.getInstance(modal).hide()
     this.sweetalert(message.resText)

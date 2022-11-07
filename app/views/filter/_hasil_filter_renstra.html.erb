@@ -10,7 +10,7 @@
     <%# tabel_tujuan_sasaran_opd %>
   <%= render 'opds/tabel_tujuan_sasaran_opd' %>
     <div class="table-responsive">
-      <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateTargetValue'>
+      <table class="table align-items-center" data-controller='form-modal' data-action='ajax-update@window->form-modal#updateIndikatorRenstra'>
         <% @program_kegiatans.each.with_index(1) do |program, nomor| %>
           <thead class="thead-bidang-urusan"
             <tr class="header-bidang-urusan">
@@ -189,7 +189,9 @@
                               Edit
                             <% end %>
                   </td>
-                  <%= render 'row_indikator_renstra',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
+                </tr>
+                <tr data-form-modal-target="indikatorRenstra" style="display=inline">
+                <%= render 'row_indikator_renstra',indikators: subgiat.indikator_renstras_new('subkegiatan', @kode_opd)[:indikator_subkegiatan] %>
                 </tr>
               <% end %>
             </tbody>

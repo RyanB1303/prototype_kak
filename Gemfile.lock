@@ -167,6 +167,7 @@ GEM
       activesupport (>= 5.0)
     htmlbeautifier (1.4.2)
     htmlentities (4.3.4)
+    htmlrender (0.0.1)
     http (5.0.4)
       addressable (~> 2.8)
       http-cookie (~> 1.0)
@@ -474,6 +475,7 @@ DEPENDENCIES
   devise
   factory_bot_rails
   htmlbeautifier
+  htmlrender
   http
   jbuilder (~> 2.7)
   letter_opener

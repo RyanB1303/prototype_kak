@@ -1,5 +1,6 @@
 class RenstraController < ApplicationController
   before_action :set_renstra
+  include HtmlRender
 
   def index
     # base_data = KakService.new(tahun: 2022, kode_unik_opd: @kode_unik_opd)
@@ -71,7 +72,14 @@ class RenstraController < ApplicationController
       end
     end
     indikator = Indikator.upsert_all(@indikator, returning: %w[indikator tahun target satuan pagu])
-    render json: { resText: 'Data disimpan', result: indikator }, status: :accepted if indikator
+    @indikators = Indikator.last(5)
+    if indikator
+      render json: { resText: 'Data disimpan',
+                     result: indikator,
+                     indikator_html: render_html_content(partial: "filter/row_indikator_renstra",
+                                                         locals: { indikators: @indikators }, layout: false) },
+             status: :accepted
+    end
   end
 
   def set_renstra

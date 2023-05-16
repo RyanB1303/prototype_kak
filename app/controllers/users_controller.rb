@@ -31,9 +31,9 @@ class UsersController < ApplicationController
     return if user_search.empty?
 
     user_search.strip!
-    @users = User.where(kode_opd: kode_opd)
-                 .where('nama ILIKE ?', "%#{user_search}%")
-                 .or(User.where('nik ILIKE ?', "%#{user_search}%"))
+    @users = User.where(kode_opd: kode_opd).where('nama ILIKE ?',
+                                                  "%#{user_search}%").or(User.where('nik ILIKE ?',
+                                                                                    "%#{user_search}%"))
   end
 
   # GET /users/1 or /users/1.json

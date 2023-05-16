@@ -112,7 +112,7 @@ class ProgramKegiatan < ApplicationRecord
   accepts_nested_attributes_for :sasarans
 
   scope :with_sasarans, -> { where(id: Sasaran.pluck(:program_kegiatan_id)) }
-  scope :with_sasarans_rincian, -> { includes(:sasarans) }
+  scope :with_sasarans_rincian, -> { includes(:sasarans).merge(Sasaran.dengan_rincian) }
   scope :with_sasarans_lengkap, lambda { |nip_asn, tahun_sasaran|
     includes(%i[sasarans usulans])
       .where(sasarans: { nip_asn: nip_asn })
@@ -177,20 +177,6 @@ class ProgramKegiatan < ApplicationRecord
 
   def pagu_tanpa_lengkap(tahun)
     sasarans.where(tahun: tahun).map(&:total_anggaran).compact.sum
-  end
-
-  def pagu_ranwal_tahun(tahun)
-    indikator_subkegiatan_renstra.where("tahun ILIKE ?", "%#{tahun}%").last&.pagu
-  end
-
-  def pagu_rankir_tahun(tahun)
-    sasarans.where("tahun ILIKE ?", "%#{tahun}%").dengan_strategi
-            .map(&:total_anggaran).compact.sum
-  end
-
-  def pagu_penetapan_tahun(tahun)
-    sasarans.where("tahun ILIKE ?", "%#{tahun}%").dengan_strategi
-            .map(&:total_anggaran_penetapan).compact.sum
   end
 
   def my_waktu

@@ -18,13 +18,13 @@
 <div class="card border-2 shadow mb-1">
   <div class="card-header">
     <div class="row align-items-center">
-      <p>Subkegiatan : <strong><%= @sasaran.subkegiatan %></strong> [<%= @sasaran.kode_subkegiatan %>]</p>
+      <p>Subkegiatan : <%= @sasaran.program_kegiatan.nama_subkegiatan %> [<%= @sasaran.program_kegiatan.kode_sub_giat %>]</p>
       <p>Sasaran : <%= @sasaran.sasaran_kinerja %></p>
       <p>Tahapan : <%= @tahapan.tahapan_kerja %></p>
     </div>
   </div>
   <div class="card-body">
-    <p>Rincian Anggaran </p>
+    <p>Rincian Anggaran Sub Kegiatan - <strong><%= @sasaran.program_kegiatan&.nama_subkegiatan || 'Belum diisi' %></strong></p>
     <div class="anggaran">
       <%= link_to 'Tambah Rekening', new_sasaran_tahapan_anggaran_path(@sasaran, @tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 mb-3 btn btn-outline-success" %>
       <table id="detail-anggaran">

@@ -118,15 +118,11 @@ class Gender < ApplicationRecord
   end
 
   def penerima_manfaat_gender
-    penerima_manfaat.is_a?(Array) ? penerima_manfaat.each { |ss|
-                                      ss.prepend("- ")
-                                    }.join(". \n") : penerima_manfaat.prepend("- ")
+    penerima_manfaat.is_a?(Array) ? penerima_manfaat.each { |ss| ss.prepend("- ") }.join(". \n") : penerima_manfaat.prepend("- ")
   end
 
   def sasaran_subkegiatan_gender
-    sasaran_subkegiatan.is_a?(Array) ? sasaran_subkegiatan.each { |ss|
-                                         ss.prepend("- ")
-                                       }.join(". \n") : sasaran_subkegiatan.prepend("- ")
+    sasaran_subkegiatan.is_a?(Array) ? sasaran_subkegiatan.each { |ss| ss.prepend("- ") }.join(". \n") : sasaran_subkegiatan.prepend("- ")
   end
 
   def penyebab_internal_non_html
@@ -162,8 +158,8 @@ class Gender < ApplicationRecord
   end
 
   def program_kegiatan_subkegiatan
-    "PROGRAM: #{program_kegiatan.nama_program}.\n\n" \
-      "KEGIATAN: #{program_kegiatan.nama_kegiatan}.\n\n" \
+    "PROGRAM: #{program_kegiatan.nama_program}.\n\n" +
+      "KEGIATAN: #{program_kegiatan.nama_kegiatan}.\n\n" +
       "<b>SUBKEGIATAN</b>: #{program_kegiatan.nama_subkegiatan}."
   end
 end

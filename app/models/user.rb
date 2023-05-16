@@ -44,11 +44,6 @@ class User < ApplicationRecord
   has_many :strategis, dependent: :destroy, foreign_key: 'nip_asn', primary_key: 'nik'
   # has_many :program_kegiatans, through: :sasarans
   has_many :pohons, dependent: :destroy
-  # usulan user
-  has_many :musrenbangs, foreign_key: 'nip_asn', primary_key: 'nik'
-  has_many :pokpirs, foreign_key: 'nip_asn', primary_key: 'nik'
-  has_many :mandatoris, foreign_key: 'nip_asn', primary_key: 'nik'
-  has_many :inovasis, foreign_key: 'nip_asn', primary_key: 'nik'
 
   # WARNING: many bug in here because added role
   scope :admin, -> { with_role(:admin) }
@@ -64,9 +59,6 @@ class User < ApplicationRecord
   scope :eselon3, -> { with_role("eselon_3") }
   scope :eselon4, -> { with_role("eselon_4") }
   scope :staff, -> { with_role("staff") }
-  scope :mandatori_setuju, lambda {
-    mandatoris.where(status: 'aktif')
-  }
   # after_update :update_sasaran
   after_create :assign_default_role
 
@@ -132,24 +124,6 @@ class User < ApplicationRecord
     }
   end
 
-  def sasarans_tahun(tahun)
-    sasarans
-      .includes(%i[strategi
-                   usulans
-                   program_kegiatan
-                   indikator_sasarans])
-      .where("COALESCE(tahun, '') ILIKE ?", "%#{tahun}%")
-      .dengan_strategi
-  end
-
-  def subkegiatan_sasarans_tahun(tahun)
-    sasarans_tahun(tahun).group_by { |s| s.program_kegiatan }
-  end
-
-  def mandatoris_tahun(tahun)
-    mandatoris.where("COALESCE(tahun, '') ILIKE ?", "#{tahun}")
-  end
-
   def program_kegiatan_sasarans(tahun: 2022)
     # TODO: clean this up
     sasarans.where(tahun: tahun)
@@ -194,11 +168,11 @@ class User < ApplicationRecord
   end
 
   def pegawai_rsud?
-    nama_bidang&.upcase&.include?('RUMAH SAKIT')
+    nama_bidang&.upcase&.include?('RUMAH SAKIT') unless nama_bidang.nil?
   end
 
   def pegawai_bagian?
-    nama_bidang&.upcase&.include?('BAGIAN')
+    nama_bidang&.upcase&.include?('BAGIAN') unless nama_bidang.nil?
   end
 
   def petunjuk_bagian
@@ -210,9 +184,9 @@ class User < ApplicationRecord
   end
 
   def biru
-    @biru ||= petunjuk_status.select { |s| s[:usulan_dan_sub] }
-                             .select { |j| j.except(:usulan_dan_sub).values.any?(false) }
-                             .count
+    @biru ||= petunjuk_status.select do |s|
+                s[:usulan_dan_sub]
+              end.select { |j| j.except(:usulan_dan_sub).values.any?(false) }.count
   end
 
   def hijau
@@ -251,10 +225,6 @@ class User < ApplicationRecord
     roles.where("roles.name ilike ?", "%eselon%")
          .or(roles.where("roles.name ilike ?", "%staff%"))
          .pluck(:name)
-  end
-
-  def role_name
-    roles.pluck(:name)
   end
 
   def isi_renaksi?
@@ -297,9 +267,5 @@ class User < ApplicationRecord
       .sudah_lengkap
       .where('sasarans.tahun ILIKE ?',
              "%#{tahun}%").order(:id)
-  end
-
-  def usulans_user
-    opd.usulans
   end
 end

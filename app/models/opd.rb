@@ -206,11 +206,11 @@ class Opd < ApplicationRecord
     end
   end
 
-  def strategic_tahun(tahun)
+  def tactical_tahun(tahun)
     strategi_eselon2.select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
   end
 
-  def tactical_tahun(tahun)
+  def strategic_tahun(tahun)
     strategi_eselon3.where.not(strategi_ref_id: "").select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
   end
 
@@ -222,12 +222,12 @@ class Opd < ApplicationRecord
     strategi_staff.where.not(strategi_ref_id: "").select { |isu| isu.tahun.match(/#{tahun}(\S*|\b)/) }
   end
 
-  def indikator_strategic_tahun(tahun)
-    strategic_tahun(tahun).map(&:indikator_sasarans).flatten
-  end
-
   def indikator_tactical_tahun(tahun)
     tactical_tahun(tahun).map(&:indikator_sasarans).flatten
+  end
+
+  def indikator_strategic_tahun(tahun)
+    strategic_tahun(tahun).map(&:indikator_sasarans).flatten
   end
 
   def indikator_operational_tahun(tahun)
@@ -240,10 +240,10 @@ class Opd < ApplicationRecord
 
   def data_total_pokin(tahun)
     {
-      strategic: strategic_tahun(tahun).count,
-      indikator_strategic: indikator_strategic_tahun(tahun).count,
       tactical: tactical_tahun(tahun).count,
       indikator_tactical: indikator_tactical_tahun(tahun).count,
+      strategic: strategic_tahun(tahun).count,
+      indikator_strategic: indikator_strategic_tahun(tahun).count,
       operational: operational_tahun(tahun).count,
       indikator_operational: indikator_operational_tahun(tahun).count,
       operational_staff: operational_2_tahun(tahun).count,

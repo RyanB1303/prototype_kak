@@ -8,13 +8,11 @@ class SasaranProgramOpdsController < ApplicationController
   end
 
   def daftar_resiko
-    @user = current_user
-    # @tahun_sasaran = cookies[:tahun_sasaran] || '2023'
-    # @program_kegiatans = @daftar_resiko.daftar_resiko_opd_user(nip: current_user.nik)
-    # @daftar_resiko = DaftarResiko.new(kode_unik_opd: @kode_opd, tahun: @tahun_sasaran)
-    # @tahun_bener = @daftar_resiko.tahun
-    @tahun = cookies[:tahun] || Date.current.year
-    @subkegiatan_sasarans = @user.subkegiatan_sasarans_tahun(@tahun)
+    @tahun_sasaran = cookies[:tahun_sasaran] || '2023'
+    @kode_opd = current_user.opd.kode_unik_opd
+    @daftar_resiko = DaftarResiko.new(kode_unik_opd: @kode_opd, tahun: @tahun_sasaran)
+    @tahun_bener = @daftar_resiko.tahun
+    @program_kegiatans = @daftar_resiko.daftar_resiko_asn(nip: current_user.nik)
   end
 
   def add_dampak_resiko

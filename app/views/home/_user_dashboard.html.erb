@@ -1,50 +1,69 @@
 <div class="col-12 col-xl-12">
   <div class="row">
     <div class="col-12 mb-4">
-      <div class="card border-0 shadow">
-        <div class="card-header">
-          <div class="row align-items-center">
-            <div class="col">
-              <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja / Rencana Kinerja</h2>
+      <% unless current_user.has_role? :non_aktif %>
+        <div class="card border-0 shadow">
+          <div class="card-header">
+            <div class="row align-items-center">
+              <div class="col">
+                <h2 class="fs-5 fw-bold mb-0">Sasaran Kinerja / Rencana Kinerja</h2>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="table-responsive" id="tempat-row-sasaran">
-          <table class="table table-hover align-items-center">
-            <thead class="thead-light">
-              <tr>
-                <th class="border-bottom text-left" scope="col">No</th>
-                <th class="border-bottom text-left" scope="col">Sasaran</th>
-                <th class="border-bottom text-center" scope="col">Tahun Sasaran</th>
-                <th class="border-bottom text-left" scope="col">Indikator</th>
-                <th class="border-bottom text-center" scope="col">Target</th>
-                <th class="border-bottom text-center" scope="col">Satuan</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @sasarans.each.with_index(1) do |s, i| %>
-                <tr class="<%= warna_sasaran(s.status_sasaran) %>">
-                  <td class="fw-bolder text-left" width="1em" rowspan="<%= s.indikator_sasarans.count + 1 %>"><%= i %></td>
-                  <td class="fw-bolder text-left" style="white-space: initial !important;" rowspan="<%= s.indikator_sasarans.count + 1 %>">
-                    <%= s.sasaran_kinerja %>
-                  </td>
-                  <td class="fw-bolder text-left" style="white-space: initial !important;" rowspan="<%= s.indikator_sasarans.count + 1 %>">
-                    <%= s.tahun %>
-                  </td>
-                  <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
+          <div class="table-responsive" id="tempat-row-sasaran">
+            <table class="table table-hover align-items-center">
+              <caption class="px-4">
+                <strong>Jumlah sasaran: </strong> <%= current_user.sasarans.count %>
+                <hr>
+                <strong class="text-danger">Jumlah sasaran tidak digunakan: </strong> <%= current_user.petunjuk_sasaran[:merah] %>
+                <hr>
+                <strong class="text-secondary">Jumlah sasaran kinerja yang belum terdapat subkegiatan: </strong> <%= current_user.petunjuk_sasaran[:kuning] %>
+                <hr>
+                <strong class="text-info">Jumlah sasaran kinerja yang rincian/keterangannya belum lengkap: </strong> <%= current_user.petunjuk_sasaran[:biru] %>
+                <hr>
+                <strong class="text-success">Jumlah sasaran kinerja yang sudah lengkap (digunakan): </strong> <%= current_user.petunjuk_sasaran[:hijau] %>
+              </caption>
+              <thead class="thead-light">
+                <tr>
+                  <th class="border-bottom text-left" scope="col">No</th>
+                  <th class="border-bottom text-left" scope="col">Sasaran</th>
+                  <th class="border-bottom text-center" scope="col">Tahun Sasaran</th>
+                  <th class="border-bottom text-left" scope="col">Indikator</th>
+                  <th class="border-bottom text-center" scope="col">Target</th>
+                  <th class="border-bottom text-center" scope="col">Satuan</th>
                 </tr>
-                <% s.indikator_sasarans.each do |indikator| %>
+              </thead>
+              <tbody>
+                <% @sasarans.each.with_index(1) do |s, i| %>
                   <tr class="<%= warna_sasaran(s.status_sasaran) %>">
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
-                    <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
+                    <td class="fw-bolder text-left" width="1em" rowspan="<%= s.indikator_sasarans.count + 1 %>"><%= i %></td>
+                    <td class="fw-bolder text-left" style="white-space: initial !important;" rowspan="<%= s.indikator_sasarans.count + 1 %>">
+                      <%= s.sasaran_kinerja %>
+                    </td>
+                    <td class="fw-bolder text-left" style="white-space: initial !important;" rowspan="<%= s.indikator_sasarans.count + 1 %>">
+                      <%= s.tahun %>
+                    </td>
+                    <td class="p-0 m-0" style="height: 0px !important; border-color: transparent;" colspan="3"></td>
                   </tr>
+                  <% s.indikator_sasarans.each do |indikator| %>
+                    <tr class="<%= warna_sasaran(s.status_sasaran) %>">
+                      <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.indikator_kinerja %></td>
+                      <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.target %></td>
+                      <td class="fw-bolder" style="white-space: initial !important;"><%= indikator.satuan %></td>
+                    </tr>
+                  <% end %>
                 <% end %>
-              <% end %>
-            </tbody>
-          </table>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      <% else %>
+        <div class="card-body">
+          <div class="alert alert-warning">
+            <strong>Anda tidak memiliki akses ke aplikasi e-kak.</strong>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

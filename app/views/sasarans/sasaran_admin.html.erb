@@ -7,7 +7,7 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Rencana Kinerja</li>
+        <li class="breadcrumb-item active" aria-current="page"><%= link_to 'Sasarans', user_sasarans_path(current_user) %></li>
       </ol>
     </nav>
     <% flash.each do |type, msg| %>

@@ -30,12 +30,12 @@ wb.add_worksheet(name: "Pohon Kinerja OPD") do |sheet| # rubocop:disable Metrics
         sheet.add_row ["", "", ind_kota.indikator, ind_kota.target, ind_kota.satuan]
       end
       strategi_kaopds.each do |str_kaopd, str_kabids|
-        sheet.add_row ["Strategic", str_kaopd.strategi, "", "", ""]
+        sheet.add_row ["Tactical", str_kaopd.strategi, "", "", ""]
         str_kaopd.indikators.each do |ind_kaopd|
           sheet.add_row ["", "", ind_kaopd.indikator, ind_kaopd.target, ind_kaopd.satuan]
         end
         str_kabids.each do |str_kabid, str_kasis|
-          sheet.add_row ["Tactical", str_kaopd.strategi, "", "", ""]
+          sheet.add_row ["Strategic", str_kaopd.strategi, "", "", ""]
           str_kabid.indikators.each do |ind_kabid|
             sheet.add_row ["", "", ind_kabid.indikator, ind_kabid.target, ind_kabid.satuan]
           end

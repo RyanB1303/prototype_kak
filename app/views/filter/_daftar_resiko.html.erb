@@ -24,6 +24,7 @@
         <thead class="thead-light">
           <tr>
             <th class="border-bottom" scope="col">No.</th>
+            <th class="border-bottom text-center" scope="col">Sub Kegiatan</th>
             <th class="border-bottom text-center border-start border-end">Rencana Kinerja</th>
             <th class="border-bottom text-center border-start border-end">Indikator</th>
             <th class="border-bottom text-center border-start border-end">Target</th>
@@ -40,10 +41,11 @@
         </thead>
         <tbody>
           <% @program_kegiatans.each.with_index(1) do |(program_kegiatan, sasarans), i| %>
-            <tr>
-              <td class="text-gray-900 text-wrap" colspan="12"><%= program_kegiatan.nama_subkegiatan %></td>
-            </tr>
+            <% row_awal = sasarans.map { |sas| sas.indikator_sasarans.size }.compact.reduce(:+) %>
+            <% row_dalam = sasarans.size + row_awal %>
             <tr class="border-bottom">
+              <td class="text-gray-900 text-wrap border-start border-end" rowspan="<%= row_dalam %>"><%= i %></td>
+              <td class="text-gray-900 text-wrap border-start border-end" rowspan="<%= row_dalam %>"><%= program_kegiatan.nama_subkegiatan %></td>
               <% sasarans.each do |show_sasaran| %>
                 <% row_indikator = show_sasaran.indikator_sasarans.size + 1 %>
                 <% rincian = show_sasaran.rincian %>

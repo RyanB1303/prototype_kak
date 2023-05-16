@@ -1,10 +1,8 @@
 class HomeController < ApplicationController
   def dashboard
-    @tahun = cookies[:tahun]
-    if current_user.has_any_role?(:asn, :admin)
-      @sasarans = current_user.sasarans_tahun(@tahun)
-    else
-      render partial: 'home/nonaktif'
-    end
+    @tahun_sasaran = cookies[:tahun_sasaran]
+    @sasarans = current_user.sasarans
+                            .where('tahun ILIKE ?', "%#{@tahun_sasaran}%")
+                            .or(current_user.sasarans.where(sasarans: { tahun: nil })).order(:id)
   end
 end

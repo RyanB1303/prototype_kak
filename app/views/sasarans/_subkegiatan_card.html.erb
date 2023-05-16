@@ -3,10 +3,7 @@
     <div class="row align-items-center">
       <div class="row align-items-center">
         <div class="col">
-          <h4 class="card-title">
-            SubKegiatan
-            <span class="ms-2"><%= sesuai?(sasaran.subkegiatan?) %></span>
-          </h4>
+          <h5>SubKegiatan </h5>
         </div>
       </div>
     </div>
@@ -29,14 +26,12 @@
   <% unless sasaran.program_kegiatan.nil? %>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table border">
+        <table class="table">
           <thead>
             <tr>
               <th>SubKegiatan</th>
               <th>Indikator</th>
-              <th>Pagu Ranwal <%= @tahun %></th>
-              <th>Pagu Rankir <%= @tahun %></th>
-              <th>Pagu Penetapan <%= @tahun %></th>
+              <th>Pagu sub kegiatan pada sasaran ini</th>
               <% unless diajukan? %>
                 <th class="text-center align-middle">Action</th>
               <% end %>
@@ -47,17 +42,11 @@
               <td class="align-middle text-wrap"><%= sasaran.program_kegiatan.nama_subkegiatan %></td>
               <td class="align-middle text-wrap"><%= sasaran.program_kegiatan.indikator_subkegiatan %></td>
               <td class="align-middle">
-                Rp.  <%= number_with_delimiter(sasaran.program_kegiatan.pagu_ranwal_tahun(tahun)) %>
-              </td>
-              <td class="align-middle">
-                Rp.  <%= number_with_delimiter(sasaran.program_kegiatan.pagu_rankir_tahun(tahun)) %>
-              </td>
-              <td class="align-middle">
-                Rp.  <%= number_with_delimiter(sasaran.program_kegiatan.pagu_penetapan_tahun(tahun)) %>
+                Rp.  <%= number_with_delimiter(sasaran.total_anggaran) %>
               </td>
               <% unless diajukan? %>
                 <td class="text-center align-middle">
-                  <%= button_to 'Hapus', "/hapus_program_from_sasaran", remote: true, method: :post, class: 'btn btn-danger text-center', data: {confirm_swal: "Hapus sub kegiatan?"}, params: {id_sasaran: sasaran.id} %>
+                  <%= button_to 'X', "/hapus_program_from_sasaran", remote: true, method: :post, class: 'btn btn-danger text-center', data: {confirm_swal: "Hapus sub kegiatan?"}, params: {id_sasaran: sasaran.id} %>
                 </td>
               <% end %>
             </tr>

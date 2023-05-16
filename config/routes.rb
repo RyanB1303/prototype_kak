@@ -120,11 +120,6 @@ Rails.application.routes.draw do
       post :setujui_usulan_di_sasaran
     end
   end
-  # user_specific_thing
-  get "/usulan_musrenbang", to: "musrenbangs#usulan_musrenbang"
-  get "/usulan_pokpir", to: "pokpirs#usulan_pokpir"
-  get "/usulan_mandatori", to: "mandatoris#usulan_mandatori"
-  get "/usulan_inisiatif", to: "inovasis#usulan_inisiatif"
 
   resources :pokpirs do
     member do
@@ -156,6 +151,7 @@ Rails.application.routes.draw do
   }
   root to: "home#dashboard"
   resources :users do
+    resources :sasarans, path: "sasaran_kerja"
     collection do
       get :struktur
       get :khusus
@@ -174,13 +170,15 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :atasans
-  resources :kepalas
-
-  resources :sasarans, path: "rencana_kinerja" do
+  resources :atasans do
+    resources :sasarans, path: "sasaran_kerja"
+  end
+  resources :kepalas do
+    resources :sasarans, path: "sasaran_kerja"
+  end
+  resources :sasarans do
     collection do
       get :list_sasaran
-      get :anggaran, path: "rincian_anggaran"
     end
     member do
       get :data_detail
@@ -218,8 +216,6 @@ Rails.application.routes.draw do
       post :pilih_asn
     end
   end
-
-  resources :rincian_belanja
 
   resources :kelompok_anggarans do
     collection do
@@ -294,7 +290,6 @@ Rails.application.routes.draw do
       get :atasan
     end
   end
-  resources :usulans
 
   resources :rekaps, param: :kode_unik_opd do
     get "jumlah", on: :collection
@@ -470,6 +465,11 @@ Rails.application.routes.draw do
   get "/laporan_tematik", to: "subkegiatan_tematiks#laporan_tematik"
   get "/laporan_tematik_apbd", to: "subkegiatan_tematiks#laporan_tematik_apbd"
   #
+  # user_specific_thing
+  get "/usulan_musrenbang", to: "musrenbangs#usulan_musrenbang"
+  get "/usulan_pokpir", to: "pokpirs#usulan_pokpir"
+  get "/usulan_mandatori", to: "mandatoris#usulan_mandatori"
+  get "/usulan_inisiatif", to: "inovasis#usulan_inisiatif"
   # third party Api
   get "/sync_sasaran", to: "api/skp_client#sync_sasaran"
   get "/sync_pegawai", to: "api/skp_client#sync_pegawai"

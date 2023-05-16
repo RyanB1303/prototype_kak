@@ -9,147 +9,170 @@
     <li class="breadcrumb-item active" aria-current="page"><%= @sasaran.sasaran_kinerja %></li>
   </ol>
 </nav>
-<div class="px-3">
-  <div class="card border-2 shadow mb-3">
-    <div class="card-body">
-      <%# <h5>Status Sasaran: <span class="badge badge-lg bg-warning text-dark"><%= @sasaran.status %1></span></h5> %>
-      <h5>Status Sasaran: <span class="badge badge-lg bg-warning text-dark"><%= status_sasaran_pokin(@sasaran&.status_sasaran) %></span></h5>
+<div class="card border-2 shadow mb-3">
+  <div class="card-body">
+    <%# <h5>Status Sasaran: <span class="badge badge-lg bg-warning text-dark"><%= @sasaran.status %1></span></h5> %>
+    <h5>Status Sasaran: <span class="badge badge-lg bg-warning text-dark"><%= status_sasaran_pokin(@sasaran&.status_sasaran) %></span></h5>
+  </div>
+</div>
+<div class="card border-2 shadow mb-3">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>SubKegiatan</th>
+            <th>Indikator</th>
+            <th>Pagu Penetapan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="align-middle text-wrap"><%= @sasaran.program_kegiatan.nama_subkegiatan %></td>
+            <td class="align-middle text-wrap"><%= @sasaran.program_kegiatan.indikator_subkegiatan %></td>
+            <% tahun = @sasaran.tahun %>
+            <td class="align-middle"> Rp.  <%= number_with_delimiter(@sasaran.program_kegiatan.pagu_sub_penetapan_tahun(tahun)) %> </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  <%= render 'sasarans/subkegiatan_card', sasaran: @sasaran, tahun: @tahun %>
-  <div class="card border-2 shadow mb-3">
-    <div class="card-body">
-      <div class="row align-items-center">
-        <div class="col mb-3">
-          <span class="fs-5 fw-bold mb-0">1. Sasaran Kinerja </span>
-        </div>
-        <div class="col text-end">
-          <%= link_to 'Edit Sasaran', edit_sasaran_path(@sasaran), class: 'btn btn-sm btn-primary' %>
-        </div>
-        <div>
-          <ul class="list mb-0">
-            <li>OPD : <%= @sasaran.user.opd.nama_opd %></li>
-            <li>ASN : <%= @sasaran.user.nama %></li>
-            <li>NIP : <%= @sasaran.user.nik %></li>
-            <li>Pangkat : <%= @sasaran.user.pangkat %></li>
-            <li>Sasaran Kinerja : <%= @sasaran.sasaran_kinerja %></li>
-            <% @sasaran.indikator_sasarans.each do |indikator| %>
-              <li>Indikator Kinerja : <%= indikator.indikator_kinerja %></li>
-              <li>Target Indikator Kinerja: <%= indikator.target %> <%= indikator.satuan %></li>
-              <li>Manual IK: 
-                <% if indikator.manual_ik.present? %>
-                  <%= link_to edit_indikator_sasaran_manual_ik_path(indikator, indikator.manual_ik),
+</div>
+<div class="card border-2 shadow mb-3">
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col mb-3">
+        <span class="fs-5 fw-bold mb-0">1. Sasaran Kinerja </span>
+      </div>
+      <div class="col text-end">
+        <%= link_to 'Edit Sasaran', edit_sasaran_path(@sasaran), class: 'btn btn-sm btn-primary' %>
+      </div>
+      <div>
+        <ul class="list mb-0">
+          <li>OPD : <%= @sasaran.user.opd.nama_opd %></li>
+          <li>ASN : <%= @sasaran.user.nama %></li>
+          <li>NIP : <%= @sasaran.user.nik %></li>
+          <li>Pangkat : <%= @sasaran.user.pangkat %></li>
+          <li>Sasaran Kinerja : <%= @sasaran.sasaran_kinerja %></li>
+          <% @sasaran.indikator_sasarans.each do |indikator| %>
+            <li>Indikator Kinerja : <%= indikator.indikator_kinerja %></li>
+            <li>Target Indikator Kinerja: <%= indikator.target %> <%= indikator.satuan %></li>
+            <li>Manual IK: 
+              <% if indikator.manual_ik.present? %>
+                <%= link_to edit_indikator_sasaran_manual_ik_path(indikator, indikator.manual_ik),
                      class: "m-3 btn btn-sm btn-outline-info" do %>
-                    <i class="fa fa-edit me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-                    <span>Edit Manual IK</span>
-                  <% end %>
-                <% else %>
-                  <%= link_to new_indikator_sasaran_manual_ik_path(indikator),
-                     class: "m-3 btn btn-sm btn-outline-danger" do %>
-                    <i class="fa fa-cog me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
-                    <span>Buat Manual IK</span>
-                  <% end %>
+                  <i class="fa fa-edit me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                  <span>Edit Manual IK</span>
                 <% end %>
-              </li>
-            <% end %>
-          </ul>
-        </div>
+              <% else %>
+                <%= link_to new_indikator_sasaran_manual_ik_path(indikator),
+                     class: "m-3 btn btn-sm btn-outline-danger" do %>
+                  <i class="fa fa-cog me-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit item"></i>
+                  <span>Buat Manual IK</span>
+                <% end %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
-    <hr>
-    <div class="card-body">
-      <div class="row align-items-center mb-3">
-        <div class="col-8">
-          <span class="fs-5 fw-bold mb-0">2. Rencana Aksi <%= current_user.eselon_user == 'eselon_4' and current_user.has_any_role?('eselon_4') ? 'dan Anggaran' : '' %></span>
-          <span><%= sesuai?(@sasaran.target_sesuai?) %></span>
-        </div>
-        <% unless diajukan? %>
-          <div class="col text-end">
-            <%= link_to 'Tambah Tahapan', new_sasaran_tahapan_path(@sasaran) ,remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},  class: "btn btn-sm btn-info" %>
-          </div>
-        <% end %>
+  </div>
+  <hr>
+  <div class="card-body">
+    <div class="row align-items-center mb-3">
+      <div class="col-8">
+        <span class="fs-5 fw-bold mb-0">2. Rencana Aksi <%= current_user.eselon_user == 'eselon_4' and current_user.has_any_role?('eselon_4') ? 'dan Anggaran' : '' %></span>
+        <span><%= sesuai?(@sasaran.target_sesuai?) %></span>
       </div>
-      <div class="table-responsive">
-        <table class="table table-sm align-items-center">
-          <thead class="thead-light">
-            <tr>
-              <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
-              <th class="border-bottom border-end border-start text-center" scope="col" rowspan="2">Urutan</th>
-              <th class="border-bottom border-end" scope="col" rowspan="2">Tahapan Kerja</th>
-              <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
-                <th class="border-bottom border-end text-center" scope="col" rowspan="2">Penetapan</th>
-                <th class="border-bottom border-end text-center" scope="col" rowspan="2" colspan="2">Rankir</th>
-              <% end %>
-              <th class="border-bottom border-end text-center" scope="col" rowspan="2">Keterangan</th>
-              <% unless diajukan? %>
-                <th class="border-bottom border-end text-center" scope="col" rowspan="2">Action</th>
-              <% end %>
-            </tr>
-          </thead>
-          <tbody>
-            <% @sasaran.tahapan_renaksi.each.with_index(1) do |tahapan, index| %>
-              <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
-                <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= index %></td>
-                <td class="text-gray-900 fw-bolder border-start border-end" scope="row">
-                  <span class="me-2"><%= tahapan&.urutan || '-' %></span>
-                  <%= link_to edit_sasaran_tahapan_path(@sasaran, tahapan),remote: true,
+      <div class="col text-end">
+        <%= button_to 'Sync Total', renaksi_update_path, remote: true, method: :post, class: 'btn btn-sm btn-primary', params: {id: @sasaran.id} %>
+      </div>
+      <% unless diajukan? %>
+        <div class="col text-end">
+          <%= link_to 'Tambah Tahapan', new_sasaran_tahapan_path(@sasaran) ,remote: true, data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},  class: "btn btn-sm btn-info" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-sm align-items-center">
+        <thead class="thead-light">
+          <tr>
+            <th class="border-bottom border-end border-start" scope="col" rowspan="2">No.</th>
+            <th class="border-bottom border-end border-start text-center" scope="col" rowspan="2">Urutan</th>
+            <th class="border-bottom border-end" scope="col" rowspan="2">Tahapan Kerja</th>
+            <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
+              <th class="border-bottom border-end text-center" scope="col" rowspan="2">Penetapan</th>
+              <th class="border-bottom border-end text-center" scope="col" rowspan="2" colspan="2">Rankir</th>
+            <% end %>
+            <th class="border-bottom border-end text-center" scope="col" rowspan="2">Keterangan</th>
+            <% unless diajukan? %>
+              <th class="border-bottom border-end text-center" scope="col" rowspan="2">Action</th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sasaran.tahapan_renaksi.each.with_index(1) do |tahapan, index| %>
+            <tr class="<%= tahapan.ada_komentar? ? 'higlighted' : 'clean' %>">
+              <td class="text-gray-900 fw-bolder border-start border-end" scope="row"><%= index %></td>
+              <td class="text-gray-900 fw-bolder border-start border-end" scope="row">
+                <span class="me-2"><%= tahapan&.urutan || '-' %></span>
+                <%= link_to edit_sasaran_tahapan_path(@sasaran, tahapan),remote: true,
                   data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},
                   class: "btn btn-sm btn-outline-info" do %>
-                    <i class="fa fa-pencil-alt me-2"></i>
-                    <span class="">Edit</span>
-                  <% end %>
-                </td>
-                <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
-                <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
-                  <% unless tahapan.anggarans.any? %>
-                    <% unless diajukan? %>
-                      <td class="fw-bolder text-gray-500 border text-end">
-                        Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan_penetapan) %>
-                      </td>
-                      <td class="fw-bolder text-gray-500 border text-end">
-                        Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %>
-                      </td>
-                      <td class="fw-bolder text-gray-500 border text-center">
-                        <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(@sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "w-100 ml-5 btn btn-sm btn-success text-white animate-up-2" %>
-                      </td>
-                    <% end %>
-                  <% else %>
-                    <td class="fw-bolder text-gray-500 border text-end bg-warning">
+                  <i class="fa fa-pencil-alt me-2"></i>
+                  <span class="">Edit</span>
+                <% end %>
+              </td>
+              <td class="text-gray-900"><%= tahapan.tahapan_kerja %></td>
+              <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
+                <% unless tahapan.anggarans.any? %>
+                  <% unless diajukan? %>
+                    <td class="fw-bolder text-gray-500 border text-end">
                       Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan_penetapan) %>
                     </td>
                     <td class="fw-bolder text-gray-500 border text-end">
                       Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %>
                     </td>
-                    <td>
-                      <% unless diajukan? %>
-                        <%= link_to 'Edit Anggaran', edit_penetapan_sasaran_tahapan_anggarans_path(@sasaran, tahapan), class: 'w-100 ml-5 btn btn-success btn-info animate-up-2' %>
-                      <% end %>
+                    <td class="fw-bolder text-gray-500 border text-center">
+                      <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(@sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "w-100 ml-5 btn btn-sm btn-success text-white animate-up-2" %>
                     </td>
                   <% end %>
-                <% end %>
-                <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
-                <% unless diajukan? %>
-                  <td class="fw-bolder text-gray-500 text-center border-end">
-                    <%= link_to sasaran_tahapan_path(@sasaran, tahapan), method: :delete, data: { confirm_swal: "Hapus Tahapan #{tahapan.tahapan_kerja}?"}, class: "m-3" do %>
-                      <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                <% else %>
+                  <td class="fw-bolder text-gray-500 border text-end bg-warning">
+                    Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan_penetapan) %>
+                  </td>
+                  <td class="fw-bolder text-gray-500 border text-end">
+                    Rp. <%= number_with_delimiter(tahapan.anggaran_tahapan) %>
+                  </td>
+                  <td>
+                    <% unless diajukan? %>
+                      <%= link_to 'Edit Anggaran', edit_penetapan_sasaran_tahapan_anggarans_path(@sasaran, tahapan), class: 'w-100 ml-5 btn btn-success btn-info animate-up-2' %>
                     <% end %>
                   </td>
                 <% end %>
-              </tr>
-            <% end %>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td class="border-bottom border-start border-end" colspan="3">Total</td>
-              <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
-                <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(@sasaran.total_anggaran_penetapan) %></td>
-                <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(@sasaran.total_anggaran_dengan_komentar) %></td>
               <% end %>
-              <td class="border-bottom border-end" colspan="3"></td>
+              <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
+              <% unless diajukan? %>
+                <td class="fw-bolder text-gray-500 text-center border-end">
+                  <%= link_to sasaran_tahapan_path(@sasaran, tahapan), method: :delete, data: { confirm_swal: "Hapus Tahapan #{tahapan.tahapan_kerja}?"}, class: "m-3" do %>
+                    <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+                  <% end %>
+                </td>
+              <% end %>
             </tr>
-          </tfoot>
-        </table>
-      </div>
+          <% end %>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td class="border-bottom border-start border-end" colspan="3">Total</td>
+            <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
+              <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(@sasaran.total_anggaran_penetapan) %></td>
+              <td class="border-bottom border-end text-end">Rp. <%= number_with_delimiter(@sasaran.total_anggaran_dengan_komentar) %></td>
+            <% end %>
+            <td class="border-bottom border-end" colspan="3"></td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
   </div>
 </div>

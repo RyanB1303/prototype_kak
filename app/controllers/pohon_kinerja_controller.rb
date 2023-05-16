@@ -12,12 +12,12 @@ class PohonKinerjaController < ApplicationController
   end
 
   def asn
-    @tahun = cookies[:tahun] || '2023'
     @opd = current_user.opd
     @pohons = @opd.pohons
     @user = current_user
     @eselon = @user.eselon_user
-    @strategis = current_user.strategis.where('tahun ILIKE ?', "%#{@tahun}%")
+    @strategis = Strategi.where(nip_asn: @user.nik).select(&:strategi_atasan)
+    @strategi_kepala = @opd.strategis.where(nip_asn: @user.nik, role: 'eselon_2')
   end
 
   def admin_filter

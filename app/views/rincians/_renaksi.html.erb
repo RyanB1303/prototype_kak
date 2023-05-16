@@ -3,7 +3,6 @@
     <div class="row align-items-center">
       <div class="col mb-3">
         <span class="fs-5 fw-bold mb-0">1. Sasaran Kinerja </span>
-        <span class="ms-2"><%= sesuai?(sasaran.target_sesuai?) %></span>
       </div>
       <div class="col text-end">
         <%= link_to 'Edit Sasaran', edit_sasaran_path(sasaran), class: 'btn btn-sm btn-primary' %>
@@ -43,7 +42,10 @@
     <div class="row align-items-center mb-3">
       <div class="col-8">
         <span class="fs-5 fw-bold mb-0">2. Rencana Aksi <%= current_user.eselon_user == 'eselon_4' and current_user.has_any_role?('eselon_4') ? 'dan Anggaran' : '' %></span>
-        <span class="ms-2"><%= sesuai?(sasaran.target_sesuai?) %></span>
+        <span><%= sesuai?(sasaran.target_sesuai?) %></span>
+      </div>
+      <div class="col text-end">
+        <%= button_to 'Sync Total', renaksi_update_path, remote: true, method: :post, class: 'btn btn-sm btn-primary', params: {id: sasaran.id} %>
       </div>
       <% unless diajukan? %>
         <div class="col text-end">
@@ -67,7 +69,7 @@
         <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
           <% unless diajukan? %>
             <div class="col-8 align-middle">
-              <%= form_with(model: [sasaran], local:false, html: { class: 'd-flex flex gap-3' }) do |f| %>
+              <%= form_with(model: [current_user, sasaran], local:false, html: { class: 'd-flex flex gap-3' }) do |f| %>
                 <select name="sasaran[sumber_dana]" data-controller="dropdown" data-placeholder="<%= sasaran.sumber_dana || 'Sumber Dana' %>" data-width="25%">
                   <option value=""></option>
                   <% SumberDana.all.each do |sumber_dana| %>
@@ -114,7 +116,7 @@
               <td class="text-gray-900 fw-bolder border-start border-end" scope="row">
                 <span class="me-2"><%= tahapan&.urutan || '-' %></span>
                 <%= link_to edit_sasaran_tahapan_path(sasaran, tahapan),remote: true,
-                  data: { bs_toggle: 'modal', bs_target: '#form-renaksi'},
+                  data: { 'bs-toggle': 'modal', 'bs-target': '#form-renaksi'},
                   class: "btn btn-sm btn-outline-info" do %>
                     <i class="fa fa-pencil-alt me-2"></i>
                     <span class="">Edit</span>
@@ -133,8 +135,7 @@
               <% unless tahapan.anggarans.any? %>
                 <% unless diajukan? %>
                   <td class="fw-bolder text-gray-500 border text-center">
-                    <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(sasaran, tahapan),remote: true,
-                     data: { bs_toggle: 'modal', bs_target: "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2" %>
+                    <%= link_to 'Tambah Anggaran', new_sasaran_tahapan_anggaran_path(sasaran, tahapan),remote: true, data: { 'bs-toggle': 'modal', 'bs-target': "#form-perhitungan"}, class: "ml-5 btn btn-sm btn-success text-white animate-up-2" %>
                   </td>
                 <% end %>
               <% else %>
@@ -149,10 +150,8 @@
               <td class="fw-bolder text-gray-500 border text-center"><%= tahapan.keterangan %></td>
               <% unless diajukan? %>
                 <td class="fw-bolder text-gray-500 text-center border-end">
-                  <%= link_to sasaran_tahapan_path(sasaran, tahapan), method: :delete,
-                   data: { confirm_swal: "Hapus Tahapan '#{tahapan.tahapan_kerja}'?"},
-                   class: "btn btn-sm btn-danger" do %>
-                    <span class="">Hapus</span>
+                  <%= link_to sasaran_tahapan_path(sasaran, tahapan), method: :delete, data: { confirm_swal: "Hapus Tahapan #{tahapan.tahapan_kerja}?"}, class: "m-3" do %>
+                    <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
                   <% end %>
                 </td>
               <% end %>

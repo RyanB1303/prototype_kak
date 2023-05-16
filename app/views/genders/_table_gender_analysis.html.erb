@@ -1,93 +1,35 @@
-<div class="card-body">
-  <div class="table-responsive mb-5">
-    <table class="table table-bordered">
-      <thead class="thead-light">
-        <tr>
-          <th class="border" scope="col">No</th>
-          <th class="border text-center">Rencana Kinerja</th>
-          <th class="border text-center">Indikator</th>
-          <th class="border text-center">Target</th>
-          <th class="border text-center">Satuan</th>
-          <th class="border text-center">Anggaran</th>
-          <th class="text-center" scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @genders.each do |subkegiatan, sasarans| %>
-          <% pagu = sasarans.map(&:total_anggaran).compact.sum %>
-          <tr>
-            <td class="border text-wrap fw-bolder text-gray-900" scope="row" colspan="5">Subkegiatan: <%= subkegiatan&.nama_subkegiatan || 'Belum terisi' %></td>
-            <td class="border" scope="row">Rp. <%= number_with_delimiter(pagu) %></td>
-            <td class="border"></td>
-          </tr>
-          <% sasarans.each.with_index(1) do |sasaran, i| %>
-            <tr>
-              <td class="border" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= i %></td>
-              <td class="border text-wrap" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>"><%= sasaran.sasaran_kinerja %></td>
-              <td class="p-0 m-0" colspan="3"></td>
-              <td class="border" scope="row" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">Rp. <%= number_with_delimiter(sasaran.total_anggaran) %></td>
-              <td class="border" rowspan="<%= sasaran.indikator_sasarans.count + 1 %>">
-                <div class="row justify-content-center w-100">
-                  <div class="col">
-                    <%= link_to "#",
-                        { remote: true, class: 'm-3 btn btn-sm btn-outline-info w-100',
-                          data: { 'bs-toggle': 'modal', 'bs-target': '#form-dampak-daftar-resiko'}, } do %>
-                      Edit
-                    <% end %>
-                  </div>
-                </div>
-              </td>
-            </tr>
-            <% sasaran.indikator_sasarans.each do |indikator| %>
-              <tr>
-                <td class="border text-wrap"><%= indikator.indikator_kinerja %></td>
-                <td class="border text-center"><%= indikator.target %></td>
-                <td class="border"><%= indikator.satuan %></td>
-              </tr>
-            <% end %>
-            <tr>
-              <th></th>
-              <th>Penerima Manfaat</th>
-              <td colspan="6">---</td>
-            </tr>
-            <tr>
-              <th></th>
-              <th>Data Terpilah</th>
-              <td colspan="6">---</td>
-            </tr>
-            <tr>
-              <th rowspan="5"></th>
-              <th rowspan="5">Faktor Kesenjangan</th>
-            </tr>
-            <tr class="faktor-kesenjangan">
-              <td>Akses</td>
-              <td class="text-wrap" colspan="4">--</td>
-            </tr>
-            <tr class="faktor-kesenjangan">
-              <td>Partisipasi</td>
-              <td class="text-wrap" colspan="4">--</td>
-            </tr>
-            <tr class="faktor-kesenjangan">
-              <td>Kontrol</td>
-              <td class="text-wrap" colspan="4">--</td>
-            </tr>
-            <tr class="faktor-kesenjangan">
-              <td>Manfaat</td>
-              <td class="text-wrap" colspan="4">--</td>
-            </tr>
-            <tr>
-              <th></th>
-              <th>Penyebab Internal</th>
-              <td colspan="6">---</td>
-            </tr>
-            <tr>
-              <th></th>
-              <th>Penyebab External</th>
-              <td colspan="6">---</td>
-            </tr>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>No</th>
+      <th class="text-center">SubKegiatan</th>
+      <th class="text-center">Penerima Manfaat</th>
+      <th class="text-center">Data Terpilah</th>
+      <th class="text-center">Faktor Kesenjangan</th>
+      <th class="text-center">Penyebab Internal</th>
+      <th class="text-center">Penyebab External</th>
+      <th class="text-center">Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @genders.each.with_index(1) do |gender, index| %>
+      <tr>
+        <td class=" "><%= index %></td>
+        <td class="text-wrap"><%= gender.program_kegiatan.nama_subkegiatan %></td>
+        <td class="text-wrap"><%= gender.penerima_manfaat_gender %></td>
+        <td class="text-wrap"><%= gender.data_terpilah_gender %></td>
+        <td class="p-0"><%= render 'table_penerima_manfaat', gender: gender %></td>
+        <td class="text-wrap"><%= gender.penyebab_internal_gender %></td>
+        <td class="text-wrap"><%= gender.penyebab_external_gender %></td>
+        <td class="">
+          <%= link_to "/genders/pdf_gap_gender/#{gender.id}/2022.pdf", class: "m-3" do %>
+            <span class="far fa-file-pdf" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cetak GAP"></span>
           <% end %>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+          <%= link_to gender, method: :delete, data: { confirm_swal: "Hapus Analisis Gender?"}, class: "m-3" do %>
+            <i class="fa fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Hapus item"></i>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

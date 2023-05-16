@@ -5,14 +5,14 @@
         <i class="fas fa-home"></i>
       <% end %>
     </li>
-    <li class="breadcrumb-item" aria-current="page">Rencana Kinerja</li>
-    <li class="breadcrumb-item active" aria-current="page"><%= @sasaran.sasaran_kinerja %></li>
+    <li class="breadcrumb-item" aria-current="page"><%= link_to 'Sasaran Kinerja', user_sasarans_path(current_user.id) %></li>
+    <li class="breadcrumb-item" aria-current="page"><%= link_to @sasaran.sasaran_kinerja, user_sasarans_path(current_user.id) %></li>
+    <li class="breadcrumb-item active" aria-current="page">Rencana Aksi</li>
   </ol>
 </nav>
-<div class="px-3">
-
 <div class="card border-2 shadow mb-3">
   <div class="card-body">
+    <%# <h5>Status Sasaran: <span class="badge badge-lg bg-warning text-dark"><%= @sasaran.status %1></span></h5> %>
     <h5>Status Sasaran: <span class="badge badge-lg bg-warning text-dark"><%= status_sasaran_pokin(@sasaran&.status_sasaran) %></span></h5>
   </div>
 </div>
@@ -22,7 +22,11 @@
 <% else %>
   <!-- SECTION - musrenbang -->
   <% if current_user.eselon_user == 'eselon_4' or current_user.has_any_role?('eselon_4') %>
-    <%= render 'subkegiatan_card', sasaran: @sasaran, tahun: @tahun %>
+    <%= render 'musrenbang_card', sasaran: @sasaran %>
+    <%= render 'pokpirs/pokpir_card', sasaran: @sasaran %>
+    <%= render 'mandatoris/mandatori_card', sasaran: @sasaran %>
+    <%= render 'inovasis/inovasi_card', sasaran: @sasaran %>
+    <%= render 'subkegiatan_card', sasaran: @sasaran %>
     <%= render 'rincians/renaksi', sasaran: @sasaran %>
     <%= render 'rincians/rincian_card', sasaran: @sasaran %>
     <%= render 'permasalahans/permasalahan_card', sasaran: @sasaran %>
@@ -45,4 +49,3 @@
   <%= render 'dasar_hukums/modal_dasar_hukum' %>
   <%= render 'latar_belakangs/modal_gambaran_umum' %>
 <% end %>
-</div>

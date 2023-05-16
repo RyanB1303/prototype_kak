@@ -12,24 +12,16 @@ class DaftarResiko
   end
 
   def sasarans_filter(tahun_sasaran, sasarans)
-    sasarans.where("tahun ILIKE ?", "%#{tahun_sasaran}%")
-            .dengan_strategi
-  end
-
-  def user_sasarans_filter(tahun_sasaran, sasarans, nip)
-    sasarans.where("nip_asn = ? AND tahun ILIKE ?", nip, "%#{tahun_sasaran}%")
-            .dengan_strategi
+    if tahun.match(/(_)/)
+      sasarans.sudah_lengkap.select { |s| s.tahun == tahun_sasaran }
+    else
+      sasarans.sudah_lengkap.reject { |s| s.tahun&.match?(/(_)/) }
+    end
   end
 
   def daftar_resiko_opd
     program_kegiatans_by_opd.with_sasarans_rincian.map do |pk|
       sasarans_filter(tahun, pk.sasarans)
-    end.compact_blank!.flatten.group_by(&:program_kegiatan)
-  end
-
-  def daftar_resiko_opd_user(nip: '')
-    program_kegiatans_by_opd.with_sasarans_rincian.map do |pk|
-      user_sasarans_filter(tahun, pk.sasarans, nip)
     end.compact_blank!.flatten.group_by(&:program_kegiatan)
   end
 

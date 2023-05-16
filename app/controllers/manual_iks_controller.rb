@@ -36,7 +36,7 @@ class ManualIksController < ApplicationController
     respond_to do |format|
       if @manual_ik.save
         format.html do
-          redirect_to sasaran_path(@sasaran),
+          redirect_to user_sasaran_path(@user, @sasaran),
                       success: "Manual IK dibuat"
         end
         format.json { render :show, status: :created, location: @manual_ik }
@@ -54,8 +54,8 @@ class ManualIksController < ApplicationController
     respond_to do |format|
       if @manual_ik.update(manual_ik_params)
         format.html do
-          redirect_to sasaran_path(@sasaran),
-                      success: "Manual IK diperbarui"
+          redirect_to user_sasaran_path(@user, @sasaran),
+                      success: "Manual IK dibuat"
         end
         format.json { render :show, status: :ok, location: @manual_ik }
       else
@@ -73,7 +73,7 @@ class ManualIksController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to sasaran_path(@sasaran),
+        redirect_to user_sasaran_path(@user, @sasaran),
                     success: "Manual IK dibuat"
       end
       format.json { head :no_content }

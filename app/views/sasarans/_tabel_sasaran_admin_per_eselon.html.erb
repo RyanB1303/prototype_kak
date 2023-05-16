@@ -1,7 +1,7 @@
 <thead class="thead-light">
   <tr>
     <th class="bg-danger text-white border" colspan="7"><%= tipe %> / <%= jenis_strategi %></th>
-    <th class="text-center"><%= link_to "Buat sasaran baru",new_sasaran_path(current_user, tipe: tipe ),data: {'bs-toggle': "tooltip", 'bs-placement': "bottom" } ,title: "Buat Sasaran baru", class: "btn btn-info text-white p-3 btn-sm", target: :_blank %></th>
+    <th class="text-center"><%= link_to "Buat sasaran baru",new_user_sasaran_path(current_user, tipe: tipe ),data: {'bs-toggle': "tooltip", 'bs-placement': "bottom" } ,title: "Buat Sasaran baru", class: "btn btn-info text-white p-3 btn-sm", target: :_blank %></th>
   </tr>
   <tr>
     <th class="border-bottom" scope="col">No.</th>

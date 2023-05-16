@@ -1,17 +1,6 @@
 class UsulansController < ApplicationController
   before_action :check_params, only: %i[update_sasaran_asn hapus_usulan_dari_sasaran]
 
-  def index
-    @tahun = cookies[:tahun] || Date.current.year
-    if current_user.has_role?(:admin)
-      render 'usulans/admin'
-    else
-      @musrenbangs = current_user.opd.musrenbang_opd
-      @mandatoris = current_user.mandatoris_tahun(@tahun)
-      @pokpirs = current_user.pokpirs
-    end
-  end
-
   def update_sasaran_asn
     sasaran = params[:sasaran_id]
     usulan = params[:usulan_id].to_i
@@ -20,8 +9,7 @@ class UsulansController < ApplicationController
     usulan = usulan_type.constantize.find(usulan)
     sasaran_update = Sasaran.find(sasaran)
     if usulan_type == 'Mandatori'
-      sasaran_update.dasar_hukums.create!(judul: usulan.peraturan_terkait, peraturan: usulan.uraian,
-                                          tahun: usulan.tahun)
+      sasaran_update.dasar_hukums.create!(judul: usulan.peraturan_terkait, peraturan: usulan.uraian, tahun: usulan.tahun)
     else
       sasaran_update.permasalahans.create!(jenis: 'Umum', permasalahan: usulan.uraian)
     end
@@ -57,7 +45,9 @@ class UsulansController < ApplicationController
     # render laporan usulan
     @jenis = params[:jenis]
     @jenis_asli = @jenis
-    @jenis_asli = 'inisiatif walikota' if @jenis == 'inisiatif'
+    if @jenis == 'inisiatif'
+      @jenis_asli = 'inisiatif walikota'
+    end
   end
 
   def pdf_usulan
@@ -74,13 +64,14 @@ class UsulansController < ApplicationController
                                           .where(usulans: { usulanable_type: @jenis })
                                           .select { |p| p.sasarans.exists? }
       @nama_opd = 'all_opd'
+      @nama_file = @nama_opd
     else
       @program_kegiatans = ProgramKegiatan.includes(%i[opd usulans]).where(opds: { id_opd_skp: @kode_opd })
                                           .where(usulans: { usulanable_type: @jenis })
                                           .select { |p| p.sasarans.exists? }
       @nama_opd = Opd.find_by(id_opd_skp: @kode_opd).nama_opd
+      @nama_file = @nama_opd
     end
-    @nama_file = @nama_opd
     @tahun = params[:tahun] || Time.now.year
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_USULAN_#{@jenis_asli}_#{@nama_file}_#{@waktu}.pdf"
@@ -100,24 +91,26 @@ class UsulansController < ApplicationController
                                           .where(usulans: { usulanable_type: @jenis })
                                           .select { |p| p.sasarans.exists? }
       @nama_opd = 'all_opd'
+      @nama_file = @nama_opd
     else
       @program_kegiatans = ProgramKegiatan.includes(%i[opd usulans]).where(opds: { id_opd_skp: @kode_opd })
                                           .where(usulans: { usulanable_type: @jenis })
                                           .select { |p| p.sasarans.exists? }
       @nama_opd = Opd.find_by(id_opd_skp: @kode_opd).nama_opd
+      @nama_file = @nama_opd
     end
-    @nama_file = @nama_opd
     @tahun = params[:tahun] || Time.now.year
     @waktu = Time.now.strftime("%d_%m_%Y_%H_%M")
     @filename = "Laporan_USULAN_#{@jenis_asli}_#{@nama_file}_#{@waktu}.xlsx"
     render xlsx: "excel_usulan", filename: @filename, disposition: "inline"
   end
 
+
   private
 
   def check_params
-    return unless params[:usulan_type].empty? && params[:usulan_id].empty?
-
-    render 'shared/_notifier', locals: { message: 'Usulan belum diambil' }, status: :unprocessable_entity
+    if params[:usulan_type].empty? && params[:usulan_id].empty?
+      render 'shared/_notifier', locals: { message: 'Usulan belum diambil' }, status: :unprocessable_entity
+    end
   end
 end

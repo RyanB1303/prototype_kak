@@ -7,24 +7,26 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
-        <li class="breadcrumb-item">Perencanaan</li>
         <li class="breadcrumb-item active" aria-current="page">GAP Gender</li>
       </ol>
     </nav>
-    <div class="card border-0 shadow">
+    <div class="card border-0 shadow" id="gap_gender_filter">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">GAP Gender Tahun - <%= @tahun %></h2>
+            <h2 class="fs-5 fw-bold mb-0">Laporan Gender</h2>
           </div>
           <div class="col text-end">
-            <span><%= current_user.nama %></span>
-            |
-            <span><%= current_user.nik %></span>
+            <span><%= @opd.nama_opd %></span>
           </div>
         </div>
       </div>
-      <%= render 'table_gender_analysis', genders: @genders %>
+      <div class="card-body">
+        <div class="table-responsive mb-5">
+          <%= render 'table_gender_analysis', genders: @genders %>
+        </div>
+        <%= link_to "Buat Analisis Gender",new_gender_path, class: "btn btn-info w-100" %>
+      </div>
     </div>
   </div>
 </div>

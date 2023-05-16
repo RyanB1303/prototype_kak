@@ -20,9 +20,9 @@
           <ul>
             <li>Jumlah Isu Strategis: <%= @isu_opd.size %></li>
             <li>Jumlah Strategi Kota: <%= @isu_opd.map { |_, strategis| strategis.count }.inject(:+) %></li>
-            <li>Jumlah Strategic Objective : <%= @rekap_jumlah[:tactical] %></li>
+            <li>Jumlah Tactical Objective : <%= @rekap_jumlah[:tactical] %></li>
             <li>Jumlah Indikator : <%= @rekap_jumlah[:indikator_tactical] %></li>
-            <li>Jumlah Tactical Objective : <%= @rekap_jumlah[:strategic] %></li>
+            <li>Jumlah Strategic Objective : <%= @rekap_jumlah[:strategic] %></li>
             <li>Jumlah Indikator : <%= @rekap_jumlah[:indikator_strategic] %></li>
             <li>Jumlah Operational Objective : <%= @rekap_jumlah[:operational] %></li>
             <li>Jumlah Indikator : <%= @rekap_jumlah[:indikator_operational] %></li>
@@ -72,9 +72,9 @@
                   </tr>
                 <% end %>
                 <% strategi_kaopds.each do |str_kaopd, strategi| %>
-                  <%= render 'row_strategi', strategi: str_kaopd, jenis: "Strategic", style: "background-color: #C8B6A6" %>
+                  <%= render 'row_strategi', strategi: str_kaopd, jenis: "Tactical", style: "background-color: #C8B6A6" %>
                   <% strategi.each do |str_kabid, str_kasis| %>
-                    <%= render 'row_strategi', strategi: str_kabid, jenis: "Tactical", style: "background-color: #CCD5AE", show_program: true %>
+                    <%= render 'row_strategi', strategi: str_kabid, jenis: "Strategic", style: "background-color: #CCD5AE", show_program: true %>
                     <% str_kasis.each do |str_kasi, str_staffs| %>
                       <%= render 'row_strategi', strategi: str_kasi, jenis: "Operational", style: "background-color: #E7AB9A", show_sub: true %>
                       <% str_staffs.each do |str_staff| %>

@@ -7,15 +7,17 @@
             <i class="fas fa-home"></i>
           <% end %>
         </li>
-        <li class="breadcrumb-item">Perencanaan</li>
-        <li class="breadcrumb-item active" aria-current="page">Manajemen Resiko</li>
+        <li class="breadcrumb-item active" aria-current="page">Daftar Resiko</li>
       </ol>
     </nav>
-    <div class="card border-0 shadow">
+    <% if current_user.has_role? :admin or current_user.has_role? :super_admin or current_user.has_role? :reviewer %>
+      <%= render 'shared/filter_with_tahun_card', filter_url: filter_daftar_resiko_path, filter_file: 'daftar_resiko' %>
+    <% end %>
+    <div class="card border-0 shadow" id="daftar_resiko">
       <div class="card-header">
         <div class="row align-items-center">
           <div class="col">
-            <h2 class="fs-5 fw-bold mb-0">Manajemen Resiko Tahun <%= @tahun %></h2>
+            <h2 class="fs-5 fw-bold mb-0">Daftar Resiko -  Tahun <%= @tahun_bener %></h2>
           </div>
           <div class="col text-end">
             <span><%= current_user.nama %></span>
@@ -24,7 +26,9 @@
           </div>
         </div>
       </div>
-      <%= render 'table_daftar_resiko'  %>
+      <% unless current_user.has_role? :admin %>
+        <%= render 'table_daftar_resiko'  %>
+      <% end %>
     </div>
   </div>
 </div>

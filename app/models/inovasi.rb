@@ -27,7 +27,6 @@ class Inovasi < ApplicationRecord
                  ditolak: 'ditolak', menunggu_persetujuan: 'menunggu_persetujuan' }
 
   belongs_to :sasaran, optional: true
-  belongs_to :user, optional: true, foreign_key: 'nip_asn', primary_key: 'nik'
   has_many :usulans, as: :usulanable, dependent: :destroy
 
   default_scope { order(created_at: :desc) }

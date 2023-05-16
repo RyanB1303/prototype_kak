@@ -31,7 +31,6 @@ class Pokpir < ApplicationRecord
 
   belongs_to :sasaran, optional: true
   belongs_to :opd_dituju, class_name: 'Opd', foreign_key: 'opd', primary_key: 'id_opd_skp', optional: true
-  belongs_to :user, optional: true, foreign_key: 'nip_asn', primary_key: 'nik'
   has_many :usulans, as: :usulanable, dependent: :destroy
   has_many :kamus_usulans, foreign_key: 'id_kamus', primary_key: 'id_kamus'
 
